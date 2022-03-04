@@ -2,7 +2,9 @@ public class Main {
 
     public static void main(String[] args)
     {
-	    System.out.println("Ez egy teszt hogy működik-e a Git");
-        System.out.println("Reméljük igen");
+        Szereplo teszt=new Jatekos();
+        Targy item=new Targy("Kurbli",5.1);
+        teszt.addItem(item);
+        System.out.println(teszt.toString());
     }
 }
