@@ -13,7 +13,7 @@ public class UI extends JFrame
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(true);
 
-        setSize(new Dimension(700,500));
+
 
         GridBagLayout layout = new  GridBagLayout();
 
@@ -111,7 +111,6 @@ public class UI extends JFrame
 
         String [] rendezesi_opciok = new String [] {"Név szerint","Súly szerint"};
         JPanel rendezes_box = new JPanel();
-        rendezes_box.setVisible(true);
         addobjects(rendezes_box,this,layout,constraints,0,1,3,1);
 
 
@@ -137,8 +136,25 @@ public class UI extends JFrame
         JScrollPane targy_LB_scroll = new JScrollPane(targy_LB);
         addobjects(targy_LB_scroll,this,layout,constraints,2,2,1,1);
 
+        //Utility gombok
+
+        JPanel utility_box = new JPanel();
+        addobjects(utility_box,this,layout,constraints,0,3,3,1);
+
+        JButton mentes_button = new JButton("Mentés");
+        mentes_button.setPreferredSize(new Dimension(70,35));
+        utility_box.add(mentes_button);
+
+        JButton betolt_button = new JButton("Betöltés");
+        betolt_button.setPreferredSize(new Dimension(90,35));
+        utility_box.add(betolt_button);
+
+        JButton kilep_button = new JButton("Kilépés");
+        kilep_button.setPreferredSize(new Dimension(70,35));
+        utility_box.add(kilep_button);
 
 
+        pack();
     }
     private void addobjects(Component component, Container container, GridBagLayout layout, GridBagConstraints gbc, int gridx, int gridy, int gridwidth, int gridheigth)
     {
