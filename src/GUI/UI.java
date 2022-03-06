@@ -4,8 +4,6 @@ import Backend.Targy;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class UI extends JFrame
 {
@@ -118,8 +116,13 @@ public class UI extends JFrame
 
         JLabel rendezes_label = new JLabel("Rendezés:");
         rendezes_box.add(rendezes_label);
+
         JComboBox<String> Jatekos_rendez_ddl = new JComboBox<>(rendezesi_opciok);
         rendezes_box.add(Jatekos_rendez_ddl);
+        Jatekos_rendez_ddl.addActionListener(e ->
+        {
+            //Rendezés
+        });
 
         //ListBox-ok
 
