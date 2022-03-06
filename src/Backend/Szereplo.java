@@ -1,3 +1,5 @@
+package Backend;
+
 import java.util.ArrayList;
 
 public abstract class Szereplo
@@ -13,7 +15,7 @@ public abstract class Szereplo
 
     @Override
     public String toString() {
-        return "Szereplo{" +
+        return "Szereplok.Szereplo{" +
                 "inventory=" + inventory +
                 '}';
     }

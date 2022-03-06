@@ -1,3 +1,5 @@
+package Backend;
+
 public class Targy
 {
     private String nev;
@@ -21,7 +23,7 @@ public class Targy
 
     @Override
     public String toString() {
-        return "Targy{" +
+        return "Szereplok.Targy{" +
                 "nev='" + nev + '\'' +
                 ", suly=" + suly +
                 '}';

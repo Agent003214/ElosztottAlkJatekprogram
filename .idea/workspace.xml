@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dad56850-0d56-437b-95ef-20b7bf18589f" name="Changes" comment="Grafikus felület elkezdve, Panelek hozzáadva">
+    <list default="true" id="dad56850-0d56-437b-95ef-20b7bf18589f" name="Changes" comment="Git teszt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Jatekos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/Jatekos.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NPC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/NPC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Szereplo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/Szereplo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Targy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Backend/Targy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +24,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$USER_HOME$/.jdks/corretto-1.8.0_265/src.zip!/java/awt/GridBagConstraints.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -115,14 +117,6 @@
       <option name="presentableId" value="Default" />
       <updated>1646381352844</updated>
     </task>
-    <task id="LOCAL-00001" summary="Grafikus felület elkezdve, Panelek hozzáadva">
-      <created>1646502021324</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1646502021324</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -135,10 +129,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Grafikus felület elkezdve, Panelek hozzáadva" />
-    <option name="LAST_COMMIT_MESSAGE" value="Grafikus felület elkezdve, Panelek hozzáadva" />
   </component>
 </project>

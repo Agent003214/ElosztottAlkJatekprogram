@@ -1,4 +1,7 @@
 import GUI.UI;
+import Backend.Jatekos;
+import Backend.Szereplo;
+import Backend.Targy;
 
 import javax.swing.*;
 
