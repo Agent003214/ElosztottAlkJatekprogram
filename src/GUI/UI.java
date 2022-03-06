@@ -83,9 +83,29 @@ public class UI extends JFrame
         addobjects(targy_hozzadasa_NPC_hez_button,NPC_box,NPC_panel_layout,constraints,1,3,1,1);
 
 
-        JPanel targy_box = new JPanel();
+        JPanel targy_box = new JPanel(targy_panel_layout);
         targy_box.setBorder(BorderFactory.createTitledBorder("Tárgy"));
         addobjects(targy_box,this,layout,constraints,2,0,1,1);
+
+        JLabel targy_nev_label = new JLabel("Név:");
+        addobjects(targy_nev_label,targy_box,targy_panel_layout,constraints,0,0,1,1);
+
+        JTextField targy_nev_tb = new JTextField();
+        targy_nev_tb.setPreferredSize(new Dimension(140,25));
+        addobjects(targy_nev_tb,targy_box,targy_panel_layout,constraints,1,0,1,1);
+
+        JLabel targy_suly_label = new JLabel("Súly:");
+        addobjects(targy_suly_label,targy_box,targy_panel_layout,constraints,0,1,1,1);
+
+        JTextField targy_suly_tb = new JTextField();
+        targy_suly_tb.setPreferredSize(new Dimension(140,25));
+        addobjects(targy_suly_tb,targy_box,targy_panel_layout,constraints,1,1,1,1);
+
+        JButton targy_felvetel_button = new JButton("Felvétel");
+        targy_felvetel_button.setPreferredSize(new Dimension(70,35));
+        addobjects(targy_felvetel_button,targy_box,targy_panel_layout,constraints,1,2,1,1);
+
+
 
     }
     private void addobjects(Component component, Container container, GridBagLayout layout, GridBagConstraints gbc, int gridx, int gridy, int gridwidth, int gridheigth)
