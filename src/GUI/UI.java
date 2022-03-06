@@ -4,6 +4,7 @@ import Backend.Targy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class UI extends JFrame
 {
@@ -152,7 +153,7 @@ public class UI extends JFrame
         JButton kilep_button = new JButton("Kilépés");
         kilep_button.setPreferredSize(new Dimension(70,35));
         utility_box.add(kilep_button);
-
+        kilep_button.addActionListener(event -> System.exit(0));
 
         pack();
     }
