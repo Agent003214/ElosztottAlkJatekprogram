@@ -4,6 +4,7 @@ import Backend.Targy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class UI extends JFrame
@@ -145,10 +146,18 @@ public class UI extends JFrame
         JButton mentes_button = new JButton("Mentés");
         mentes_button.setPreferredSize(new Dimension(70,35));
         utility_box.add(mentes_button);
+        mentes_button.addActionListener(e ->
+        {
+            //Mentés
+        });
 
         JButton betolt_button = new JButton("Betöltés");
         betolt_button.setPreferredSize(new Dimension(90,35));
         utility_box.add(betolt_button);
+        betolt_button.addActionListener(e ->
+        {
+            //Betöltés
+        });
 
         JButton kilep_button = new JButton("Kilépés");
         kilep_button.setPreferredSize(new Dimension(70,35));
