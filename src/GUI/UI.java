@@ -120,6 +120,24 @@ public class UI extends JFrame
         JComboBox<String> Jatekos_rendez_ddl = new JComboBox<>(rendezesi_opciok);
         rendezes_box.add(Jatekos_rendez_ddl);
 
+        //ListBox-ok
+
+        DefaultListModel<String> jatekos_lista = new DefaultListModel<>();
+        JList<String> jatekos_LB = new JList<>(jatekos_lista);
+        JScrollPane jatekos_LB_scroll = new JScrollPane(jatekos_LB);
+        addobjects(jatekos_LB_scroll,this,layout,constraints,0,2,1,1);
+
+        DefaultListModel<String> NPC_lista = new DefaultListModel<>();
+        JList<String> NPC_LB = new JList<>(NPC_lista);
+        JScrollPane NPC_LB_scroll = new JScrollPane(NPC_LB);
+        addobjects(NPC_LB_scroll,this,layout,constraints,1,2,1,1);
+
+        DefaultListModel<String> targy_lista = new DefaultListModel<>();
+        JList<String> targy_LB = new JList<>(targy_lista);
+        JScrollPane targy_LB_scroll = new JScrollPane(targy_LB);
+        addobjects(targy_LB_scroll,this,layout,constraints,2,2,1,1);
+
+
 
     }
     private void addobjects(Component component, Container container, GridBagLayout layout, GridBagConstraints gbc, int gridx, int gridy, int gridwidth, int gridheigth)
