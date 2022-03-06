@@ -14,22 +14,20 @@ public class UI extends JFrame
         setResizable(true);
 
         setSize(new Dimension(700,500));
+
         GridBagLayout layout = new  GridBagLayout();
+
         GridBagConstraints constraints = new GridBagConstraints();
-
-        GridBagLayout jatekos_panel_layout =new GridBagLayout();
-
-        GridBagLayout NPC_panel_layout =new GridBagLayout();
-
-        GridBagLayout targy_panel_layout =new GridBagLayout();
-
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = constraints.weighty = 1f;
         constraints.insets = new Insets(5,5,5,5);
+
         setLayout(layout);
 
         // Játékos panel és komponensei
 
+
+        GridBagLayout jatekos_panel_layout =new GridBagLayout();
         JPanel jatekos_box = new JPanel(jatekos_panel_layout);
         jatekos_box.setBorder(BorderFactory.createTitledBorder("Játékos"));
         addobjects(jatekos_box,this,layout,constraints,0,0,1,1);
@@ -57,6 +55,8 @@ public class UI extends JFrame
 
         // NPC panel és komponensei
 
+
+        GridBagLayout NPC_panel_layout =new GridBagLayout();
         JPanel NPC_box = new JPanel(NPC_panel_layout);
         NPC_box.setBorder(BorderFactory.createTitledBorder("NPC"));
         addobjects(NPC_box,this,layout,constraints,1,0,1,1);
@@ -82,7 +82,9 @@ public class UI extends JFrame
         targy_hozzadasa_NPC_hez_button.setPreferredSize(new Dimension(70,35));
         addobjects(targy_hozzadasa_NPC_hez_button,NPC_box,NPC_panel_layout,constraints,1,3,1,1);
 
+        //Tárgy panel és komponensei
 
+        GridBagLayout targy_panel_layout =new GridBagLayout();
         JPanel targy_box = new JPanel(targy_panel_layout);
         targy_box.setBorder(BorderFactory.createTitledBorder("Tárgy"));
         addobjects(targy_box,this,layout,constraints,2,0,1,1);
@@ -105,6 +107,18 @@ public class UI extends JFrame
         targy_felvetel_button.setPreferredSize(new Dimension(70,35));
         addobjects(targy_felvetel_button,targy_box,targy_panel_layout,constraints,1,2,1,1);
 
+        //Rendezés panel és komponensei
+
+        String [] rendezesi_opciok = new String [] {"Név szerint","Súly szerint"};
+        JPanel rendezes_box = new JPanel();
+        rendezes_box.setVisible(true);
+        addobjects(rendezes_box,this,layout,constraints,0,1,3,1);
+
+
+        JLabel rendezes_label = new JLabel("Rendezés:");
+        rendezes_box.add(rendezes_label);
+        JComboBox<String> Jatekos_rendez_ddl = new JComboBox<>(rendezesi_opciok);
+        rendezes_box.add(Jatekos_rendez_ddl);
 
 
     }
