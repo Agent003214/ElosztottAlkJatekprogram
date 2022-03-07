@@ -23,9 +23,6 @@ public class Targy
 
     @Override
     public String toString() {
-        return "Szereplok.Targy{" +
-                "nev='" + nev + '\'' +
-                ", suly=" + suly +
-                '}';
+        return "Tárgy neve: "+nev+", Tárgy súlya: "+suly;
     }
 }
