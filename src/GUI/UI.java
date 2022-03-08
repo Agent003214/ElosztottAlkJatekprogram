@@ -4,9 +4,14 @@ import Backend.Targy;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class UI extends JFrame
 {
+    private ArrayList<Targy> targyak = new ArrayList<>();
+
     public UI()
     {
         setTitle("Játékprogram");
@@ -107,6 +112,7 @@ public class UI extends JFrame
         targy_felvetel_button.setPreferredSize(new Dimension(70,35));
         addobjects(targy_felvetel_button,targy_box,targy_panel_layout,constraints,1,2,1,1);
 
+
         //Rendezés panel és komponensei
 
         String [] rendezesi_opciok = new String [] {"Név szerint","Súly szerint"};
@@ -166,6 +172,30 @@ public class UI extends JFrame
         kilep_button.setPreferredSize(new Dimension(70,35));
         utility_box.add(kilep_button);
         kilep_button.addActionListener(event -> System.exit(0));
+
+
+        //Tárgy felvétele
+        targy_felvetel_button.addActionListener(e ->
+        {
+            //Input teszt szükséges
+
+            String nev = targy_nev_tb.getText();
+            double suly =Double.parseDouble(targy_suly_tb.getText());
+            targyak.add(new Targy(nev,suly));
+            targy_lista.clear();
+            jatekos_targy_ddl.removeAllItems();
+            NPC_targy_ddl.removeAllItems();
+            for (Targy targy : targyak)
+            {
+                targy_lista.addElement(targy.toString());   //Az hogy mi lesz kiírva a toString-től függ!
+
+                jatekos_targy_ddl.addItem(targy);           //Dropdow a játékosokhoz
+
+                NPC_targy_ddl.addItem(targy);               //Dropdow az NPC-khez
+            }
+            pack();
+        });
+
 
         pack();
     }
