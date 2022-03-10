@@ -1,9 +1,9 @@
+package Main;
+
 import GUI.UI;
 import Backend.*;
 
 import javax.swing.*;
-import java.sql.Struct;
-import java.util.ArrayList;
 
 public class Main
 {

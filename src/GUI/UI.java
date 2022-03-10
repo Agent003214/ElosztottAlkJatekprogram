@@ -1,17 +1,22 @@
 package GUI;
 
+import Backend.Jatekos;
+import Backend.NevStringException;
+import Backend.SulyStringException;
 import Backend.Targy;
+import Main.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class UI extends JFrame
 {
     private ArrayList<Targy> targyak = new ArrayList<>();
+    private ArrayList<Jatekos> jatekosok = new ArrayList<Jatekos>();
 
+
+    private Main m = new Main();
     public UI()
     {
         setTitle("Játékprogram");
@@ -174,27 +179,72 @@ public class UI extends JFrame
         kilep_button.addActionListener(event -> System.exit(0));
 
 
+        //Játékos felvétele
+        jatekos_felvesz_button.addActionListener(e ->
+        {
+            try
+            {
+                jatekos_lista.addElement(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
+            }
+            catch (NevStringException exp)
+            {
+                JOptionPane.showMessageDialog(null,"A név nem megfelelően lett megadva!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        //Tárgy felvétele a játékoshoz
+
+        targy_hozzadasa_jatekoshoz_button.addActionListener(e ->
+        {
+
+        });
+
+
+
+
+        //NPC felvétele
+        NPC_felvesz_button.addActionListener(e ->
+        {
+            try
+            {
+                NPC_lista.addElement(m.NPCHozzaAd(NPC_nev_tb.getText()));
+            }
+            catch (NevStringException exp)
+            {
+                JOptionPane.showMessageDialog(null,"A név nem megfelelően lett megadva!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
         //Tárgy felvétele
         targy_felvetel_button.addActionListener(e ->
         {
             //Input teszt szükséges
 
-            String nev = targy_nev_tb.getText();
-            double suly =Double.parseDouble(targy_suly_tb.getText());
-            targyak.add(new Targy(nev,suly));
-            targy_lista.clear();
-            jatekos_targy_ddl.removeAllItems();
-            NPC_targy_ddl.removeAllItems();
-            for (Targy targy : targyak)
+            try
             {
-                targy_lista.addElement(targy.toString());   //Az hogy mi lesz kiírva a toString-től függ!
+                targyak.add(m.Targyletrehoz(targy_nev_tb.getText(),targy_suly_tb.getText()));
+                targy_lista.clear();
+                jatekos_targy_ddl.removeAllItems();
+                NPC_targy_ddl.removeAllItems();
+                for (Targy targy : targyak)
+                {
+                    targy_lista.addElement(targy.toString());   //Az hogy mi lesz kiírva a toString-től függ!
 
-                jatekos_targy_ddl.addItem(targy);           //Dropdow a játékosokhoz
+                    jatekos_targy_ddl.addItem(targy);           //Dropdow a játékosokhoz
 
-                NPC_targy_ddl.addItem(targy);               //Dropdow az NPC-khez
+                    NPC_targy_ddl.addItem(targy);               //Dropdow az NPC-khez
+                }
             }
-            pack();
+            catch (SulyStringException exp)
+            {
+                JOptionPane.showMessageDialog(null, "A súly nem megfelelően lett megadva!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (NevStringException exp)
+            {
+                JOptionPane.showMessageDialog(null,"A név nem megfelelően lett megadva!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+            }
         });
+
+
 
 
         pack();
