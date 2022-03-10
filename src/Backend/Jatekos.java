@@ -3,6 +3,7 @@ package Backend;
 public class Jatekos extends Szereplo
 {
     private double sebesseg;
+    private final double maxsebesseg=30;
     public Jatekos(String nev)
     {
         super(nev);
@@ -16,11 +17,15 @@ public class Jatekos extends Szereplo
             addToInventory(item);
             sebessegSzamol();
         }
+        else
+        {
+            throw new TargyNehezException();
+        }
     }
 
     private void sebessegSzamol()
     {
-        sebesseg=sebesseg-getosszsuly();
+        sebesseg=maxsebesseg-getosszsuly();
     }
 
     public double getSebesseg()
