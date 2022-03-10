@@ -1,20 +1,19 @@
 package GUI;
 
-import Backend.Jatekos;
-import Backend.NevStringException;
-import Backend.SulyStringException;
-import Backend.Targy;
+import Backend.*;
 import Main.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class UI extends JFrame
 {
     private ArrayList<Targy> targyak = new ArrayList<>();
     private ArrayList<Jatekos> jatekosok = new ArrayList<Jatekos>();
 
+    private ArrayList<NPC> NPC_k = new ArrayList<NPC>();
 
     private Main m = new Main();
     public UI()
@@ -184,7 +183,8 @@ public class UI extends JFrame
         {
             try
             {
-                jatekos_lista.addElement(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
+                jatekosok.add(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
+                jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
             }
             catch (NevStringException exp)
             {
@@ -196,6 +196,11 @@ public class UI extends JFrame
         targy_hozzadasa_jatekoshoz_button.addActionListener(e ->
         {
 
+            jatekosok.get(jatekosok.size()-1).addItemToJatekos((Targy) Objects.requireNonNull(jatekos_targy_ddl.getSelectedItem()));
+            jatekos_lista.clear();
+            jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
+
+            // jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1)); Ide fog jönni a tárgyak listázása
         });
 
 
@@ -206,7 +211,8 @@ public class UI extends JFrame
         {
             try
             {
-                NPC_lista.addElement(m.NPCHozzaAd(NPC_nev_tb.getText()));
+                NPC_k.add(m.NPCHozzaAd(NPC_nev_tb.getText()));
+                NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
             }
             catch (NevStringException exp)
             {
