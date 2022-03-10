@@ -17,16 +17,16 @@ public class Main
         SwingUtilities.invokeLater(() -> new UI().setVisible(true));
     }
 
-    public String JatekosHozzaAd(String nev)
+    public Jatekos JatekosHozzaAd(String nev)
     {
         checkNevString(nev);
-        return new Jatekos(nev).toString();
+        return new Jatekos(nev);
     }
 
-    public String NPCHozzaAd(String nev)
+    public NPC NPCHozzaAd(String nev)
     {
         checkNevString(nev);
-        return new NPC(nev).toString();
+        return new NPC(nev);
     }
 
     public Targy Targyletrehoz(String nev, String suly)
