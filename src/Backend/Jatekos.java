@@ -12,7 +12,7 @@ public class Jatekos extends Szereplo
 
     public void addItemToJatekos(Targy item)
     {
-        if (getosszsuly()+item.getSuly()<sebesseg)
+        if (getosszsuly()+item.getTargySuly()<sebesseg)
         {
             addToInventory(item);
             sebessegSzamol();

@@ -1,7 +1,5 @@
 package Backend;
 
-import java.util.Comparator;
-
 public class Targy
 {
     private String nev;
@@ -13,21 +11,12 @@ public class Targy
         this.suly = suly;
     }
 
-    public static Comparator<Targy> NevComparator=new Comparator<Targy>()
-    {
-        @Override
-        public int compare(Targy item1, Targy item2)
-        {
-            return item1.getNev().compareTo(item2.getNev());
-        }
-    };
-
-    public String getNev()
+    public String getTargyNev()
     {
         return nev;
     }
 
-    public double getSuly()
+    public double getTargySuly()
     {
         return suly;
     }

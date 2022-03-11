@@ -71,11 +71,4 @@ public class Main
         }
         throw new SulyStringException();
     }
-
-    //Név szerint rendezi a tárgyakat tároló listát
-    public ArrayList<Targy> NevRendez(ArrayList<Targy> targy)
-    {
-        Collections.sort(targy,Targy.NevComparator);
-        return targy;
-    }
 }

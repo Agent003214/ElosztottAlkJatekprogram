@@ -28,9 +28,41 @@ public abstract class Szereplo
         int meret= inventory.size();
         for (int i = 0; i < meret; i++)
         {
-            seged+=inventory.get(i).getSuly();
+            seged+=inventory.get(i).getTargySuly();
         }
         return seged;
+    }
+
+    public void NevSzerintRendez()
+    {
+        int n = inventory.size();
+        for (int i = 0; i < n-1; i++)
+        {
+            for (int j = 0; j < n-i-1; j++)
+            {
+                if (inventory.get(j).getTargyNev().compareTo(inventory.get(j+1).getTargyNev())>0)
+                {
+                    inventory.add(j,inventory.get(j+1));
+                    inventory.remove(j+2);
+                }
+            }
+        }
+    }
+
+    public void SulySzerintRendez()
+    {
+        int n = inventory.size();
+        for (int i = 0; i < n-1; i++)
+        {
+            for (int j = 0; j < n-i-1; j++)
+            {
+                if (inventory.get(j).getTargySuly() > inventory.get(j+1).getTargySuly())
+                {
+                    inventory.add(j,inventory.get(j+1));
+                    inventory.remove(j+2);
+                }
+            }
+        }
     }
 
     @Override
