@@ -1,5 +1,7 @@
 package Backend;
 
+import java.util.Comparator;
+
 public class Targy
 {
     private String nev;
@@ -10,6 +12,15 @@ public class Targy
         this.nev = nev;
         this.suly = suly;
     }
+
+    public static Comparator<Targy> NevComparator=new Comparator<Targy>()
+    {
+        @Override
+        public int compare(Targy item1, Targy item2)
+        {
+            return item1.getNev().compareTo(item2.getNev());
+        }
+    };
 
     public String getNev()
     {
@@ -24,6 +35,7 @@ public class Targy
     @Override
     public String toString()
     {
-        return "Tárgy neve: "+nev+", Tárgy súlya: "+suly;
+        String teszt="Tárgy neve: "+nev+",\n Tárgy súlya: "+suly+"\n";
+        return teszt;
     }
 }

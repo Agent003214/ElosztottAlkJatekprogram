@@ -4,12 +4,17 @@ import GUI.UI;
 import Backend.*;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Main
 {
 
     public static void main(String[] args)
     {
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ignored) {
@@ -35,6 +40,8 @@ public class Main
         return new Targy(nev,checkSulyString(suly));
     }
 
+    //Megnézi, hogy nincs-e baj a név TexBox-ból bekért adattal
+    //Ha hiba van benne, exception-t bod
     private boolean checkNevString(String nev)
     {
         if (nev.length()>0 && nev!=null)
@@ -47,6 +54,8 @@ public class Main
         }
     }
 
+    //Megnézi, hogy nincs-e baj a súly TexBox-ból bekért adattal
+    //Ha hiba van benne, exception-t bod
     private double checkSulyString(String suly)
     {
         try
@@ -61,5 +70,12 @@ public class Main
             throw new SulyStringException();
         }
         throw new SulyStringException();
+    }
+
+    //Név szerint rendezi a tárgyakat tároló listát
+    public ArrayList<Targy> NevRendez(ArrayList<Targy> targy)
+    {
+        Collections.sort(targy,Targy.NevComparator);
+        return targy;
     }
 }

@@ -34,10 +34,9 @@ public abstract class Szereplo
     }
 
     @Override
-    public String toString() {
-        return "Szereplo{" +
-                "nev='" + nev + '\'' +
-                ", inventory=" + inventory +
-                '}';
+    public String toString()
+    {
+        String teszt="Név: "+nev+", Eszközlista: \n"+inventory;
+        return teszt;
     }
 }
