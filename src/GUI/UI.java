@@ -183,6 +183,7 @@ public class UI extends JFrame
         {
             try
             {
+                jatekos_lista.clear();
                 jatekosok.add(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
                 jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
             }
@@ -195,12 +196,23 @@ public class UI extends JFrame
 
         targy_hozzadasa_jatekoshoz_button.addActionListener(e ->
         {
+            try
+            {
+                jatekosok.get(jatekosok.size()-1).addItemToJatekos((Targy) Objects.requireNonNull(jatekos_targy_ddl.getSelectedItem()));
+                jatekos_lista.clear();
+                jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
+                jatekos_lista.addElement("Tárgyak:");
 
-            jatekosok.get(jatekosok.size()-1).addItemToJatekos((Targy) Objects.requireNonNull(jatekos_targy_ddl.getSelectedItem()));
-            jatekos_lista.clear();
-            jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
-
-            // jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1)); Ide fog jönni a tárgyak listázása
+                for (int i = 0; i < jatekosok.get(jatekosok.size()-1).getInventory().size(); i++)
+                {
+                    jatekos_lista.addElement("            "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargyNev());
+                    jatekos_lista.addElement("                        "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargySuly());
+                }
+            }
+            catch (TargyNehezException exp)
+            {
+                JOptionPane.showMessageDialog(null,"A tárgy túl nehéz, nem tudjuk elvinni!","Nincs elég mozgási sebesség!",JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
 
