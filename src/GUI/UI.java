@@ -203,7 +203,7 @@ public class UI extends JFrame
         {
             try
             {
-                jatekosok.get(jatekosok.size()-1).addItemToJatekos((Targy) Objects.requireNonNull(jatekos_targy_ddl.getSelectedItem()));
+                jatekosok.get(jatekosok.size()-1).addToInventory((Targy) Objects.requireNonNull(jatekos_targy_ddl.getSelectedItem()));
                 jatekos_lista.clear();
                 jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
                 jatekos_lista.addElement("Tárgyak:");
@@ -240,7 +240,7 @@ public class UI extends JFrame
         {
             try
             {
-                NPC_k.get(NPC_k.size()-1).addItemToNPC((Targy) Objects.requireNonNull(NPC_targy_ddl.getSelectedItem()));
+                NPC_k.get(NPC_k.size()-1).addToInventory((Targy) Objects.requireNonNull(NPC_targy_ddl.getSelectedItem()));
                 NPC_lista.clear();
                 NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
                 NPC_lista.addElement("Tárgyak:");
