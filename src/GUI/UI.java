@@ -5,6 +5,8 @@ import Main.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -216,8 +218,6 @@ public class UI extends JFrame
         });
 
 
-
-
         //NPC felvétele
         NPC_felvesz_button.addActionListener(e ->
         {
@@ -229,6 +229,28 @@ public class UI extends JFrame
             catch (NevStringException exp)
             {
                 JOptionPane.showMessageDialog(null,"A név nem megfelelően lett megadva!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        //Tárgy felvétele az NPC-hez
+        targy_hozzadasa_NPC_hez_button.addActionListener(e ->
+        {
+            try
+            {
+                NPC_k.get(NPC_k.size()-1).addItemToNPC((Targy) Objects.requireNonNull(NPC_targy_ddl.getSelectedItem()));
+                NPC_lista.clear();
+                NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
+                NPC_lista.addElement("Tárgyak:");
+
+                for (int i = 0; i < NPC_k.get(NPC_k.size()-1).getInventory().size(); i++)
+                {
+                    NPC_lista.addElement("            "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargyNev());
+                    NPC_lista.addElement("                        "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargySuly());
+                }
+            }
+            catch (TargyNehezException exp)
+            {
+                JOptionPane.showMessageDialog(null,"A tárgy túl nehéz, nem tudjuk elvinni!","Nincs elég mozgási sebesség!",JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
