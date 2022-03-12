@@ -4,6 +4,7 @@ import Backend.*;
 import Exceptions.NevStringException;
 import Exceptions.SulyStringException;
 import Exceptions.TargyNehezException;
+import FileInputOutput.FileInputOutput;
 import Main.*;
 
 import javax.swing.*;
@@ -163,7 +164,7 @@ public class UI extends JFrame
         utility_box.add(mentes_button);
         mentes_button.addActionListener(e ->
         {
-            //Mentés
+            FileInputOutput.mentes();
         });
 
         JButton betolt_button = new JButton("Betöltés");
@@ -171,7 +172,8 @@ public class UI extends JFrame
         utility_box.add(betolt_button);
         betolt_button.addActionListener(e ->
         {
-            //Betöltés
+            FileInputOutput.betolt();
+            System.out.println("Sikerült");
         });
 
         JButton kilep_button = new JButton("Kilépés");

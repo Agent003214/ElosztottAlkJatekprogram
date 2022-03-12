@@ -1,0 +1,16 @@
+Tárgyak
+Lándzsa;3
+Pajzs;5.1
+Tőr;1
+Íj;3
+*
+Játékos
+Pista
+Lándzsa;3
+Pajzs;5.1
+Tőr;1
+$
+NPC
+Jani
+Íj;3
+Nyíl;0.4
