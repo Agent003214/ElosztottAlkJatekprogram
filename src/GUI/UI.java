@@ -9,15 +9,13 @@ import Main.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class UI extends JFrame
 {
     private ArrayList<Targy> targyak = new ArrayList<>();
-    private ArrayList<Jatekos> jatekosok = new ArrayList<Jatekos>();
+    private ArrayList<Jatekos> jatekosok = new ArrayList<>();
 
     private ArrayList<NPC> NPC_k = new ArrayList<NPC>();
 
@@ -172,8 +170,26 @@ public class UI extends JFrame
         utility_box.add(betolt_button);
         betolt_button.addActionListener(e ->
         {
-            FileInputOutput.betolt();
-            System.out.println("Sikerült");
+           ArrayList<ArrayList> result = FileInputOutput.betolt();
+           jatekosok = result.get(0);
+           NPC_k = result.get(1);
+           targyak = result.get(2);
+
+            targyakKiir(jatekos_lista,jatekosok);
+            targyakKiir(NPC_lista,NPC_k);
+
+            targy_lista.clear();
+            jatekos_targy_ddl.removeAllItems();
+            NPC_targy_ddl.removeAllItems();
+            for (Targy targy : targyak)
+            {
+                targy_lista.addElement(targy.toString());   //Az hogy mi lesz kiírva a toString-től függ!
+
+                jatekos_targy_ddl.addItem(targy);           //Dropdow a játékosokhoz
+
+                NPC_targy_ddl.addItem(targy);               //Dropdow az NPC-khez
+            }
+
         });
 
         JButton kilep_button = new JButton("Kilépés");
@@ -203,15 +219,7 @@ public class UI extends JFrame
             try
             {
                 jatekosok.get(jatekosok.size()-1).addToInventory((Targy) Objects.requireNonNull(jatekos_targy_ddl.getSelectedItem()));
-                jatekos_lista.clear();
-                jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
-                jatekos_lista.addElement("Tárgyak:");
-
-                for (int i = 0; i < jatekosok.get(jatekosok.size()-1).getInventory().size(); i++)
-                {
-                    jatekos_lista.addElement("            "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargyNev());
-                    jatekos_lista.addElement("                        "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargySuly());
-                }
+                targyakKiir(jatekos_lista,jatekosok);
             }
             catch (TargyNehezException exp)
             {
@@ -241,15 +249,7 @@ public class UI extends JFrame
             try
             {
                 NPC_k.get(NPC_k.size()-1).addToInventory((Targy) Objects.requireNonNull(NPC_targy_ddl.getSelectedItem()));
-                NPC_lista.clear();
-                NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
-                NPC_lista.addElement("Tárgyak:");
-
-                for (int i = 0; i < NPC_k.get(NPC_k.size()-1).getInventory().size(); i++)
-                {
-                    NPC_lista.addElement("            "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargyNev());
-                    NPC_lista.addElement("                        "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargySuly());
-                }
+                targyakKiir(NPC_lista,NPC_k);
             }
             catch (TargyNehezException exp)
             {
@@ -292,48 +292,18 @@ public class UI extends JFrame
             if(Jatekos_rendez_ddl.getSelectedItem() == "Név szerint")
             {
                 jatekosok.get(jatekosok.size()-1).NevSzerintRendez();
-                jatekos_lista.clear();
-                jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
-                jatekos_lista.addElement("Tárgyak:");
+                targyakKiir(jatekos_lista,jatekosok);
 
-                for (int i = 0; i < jatekosok.get(jatekosok.size()-1).getInventory().size(); i++)
-                {
-                    jatekos_lista.addElement("            "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargyNev());
-                    jatekos_lista.addElement("                        "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargySuly());
-                }
                 NPC_k.get(NPC_k.size()-1).NevSzerintRendez();
-                NPC_lista.clear();
-                NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
-                NPC_lista.addElement("Tárgyak:");
-
-                for (int i = 0; i < NPC_k.get(NPC_k.size()-1).getInventory().size(); i++)
-                {
-                    NPC_lista.addElement("            "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargyNev());
-                    NPC_lista.addElement("                        "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargySuly());
-                }
+                targyakKiir(NPC_lista,NPC_k);
             }
             else
             {
                 jatekosok.get(jatekosok.size()-1).SulySzerintRendez();
-                jatekos_lista.clear();
-                jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
-                jatekos_lista.addElement("Tárgyak:");
+                targyakKiir(jatekos_lista,jatekosok);
 
-                for (int i = 0; i < jatekosok.get(jatekosok.size()-1).getInventory().size(); i++)
-                {
-                    jatekos_lista.addElement("            "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargyNev());
-                    jatekos_lista.addElement("                        "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargySuly());
-                }
                 NPC_k.get(NPC_k.size()-1).SulySzerintRendez();
-                NPC_lista.clear();
-                NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
-                NPC_lista.addElement("Tárgyak:");
-
-                for (int i = 0; i < NPC_k.get(NPC_k.size()-1).getInventory().size(); i++)
-                {
-                    NPC_lista.addElement("            "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargyNev());
-                    NPC_lista.addElement("                        "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargySuly());
-                }
+                targyakKiir(NPC_lista,NPC_k);
             }
         });
 
@@ -351,5 +321,17 @@ public class UI extends JFrame
 
         layout.setConstraints(component, gbc);
         container.add(component);
+    }
+    private void targyakKiir (DefaultListModel<String> lista, ArrayList<? extends Szereplo> list)
+    {
+        lista.clear();
+        lista.addElement(list.get(list.size()-1).toString());
+        lista.addElement("Tárgyak:");
+
+        for (int i = 0; i < list.get(list.size()-1).getInventory().size(); i++)
+        {
+            lista.addElement("            "+list.get(list.size()-1).getInventory().get(i).getTargyNev());
+            lista.addElement("                        "+list.get(list.size()-1).getInventory().get(i).getTargySuly());
+        }
     }
 }
