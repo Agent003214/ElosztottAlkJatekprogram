@@ -25,8 +25,7 @@ public abstract class Szereplo
     public double getosszsuly()
     {
         double seged=0;
-        int meret= inventory.size();
-        for (int i = 0; i < meret; i++)
+        for (int i = 0; i < inventory.size(); i++)
         {
             seged+=inventory.get(i).getTargySuly();
         }
@@ -68,7 +67,7 @@ public abstract class Szereplo
     @Override
     public String toString()
     {
-        String teszt="Név: "+nev+", Eszközlista: \n"+inventory;
+        String teszt="Név: "+nev;
         return teszt;
     }
 }
