@@ -24,7 +24,6 @@ public class Targy
     @Override
     public String toString()
     {
-        String teszt="Tárgy neve: "+nev+",\n Tárgy súlya: "+suly+"\n";
-        return teszt;
+        return "Tárgy neve: "+nev+", Tárgy súlya: "+suly;
     }
 }

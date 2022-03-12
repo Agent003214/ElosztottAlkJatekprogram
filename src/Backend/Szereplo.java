@@ -4,18 +4,15 @@ import java.util.ArrayList;
 
 public abstract class Szereplo
 {
-    private String nev;
-    private ArrayList<Targy> inventory=new ArrayList<>();
+    protected String nev;
+    protected ArrayList<Targy> inventory=new ArrayList<>();
 
     public Szereplo(String nev)
     {
         this.nev = nev;
     }
 
-    public void addToInventory(Targy item)
-    {
-        inventory.add(item);
-    }
+    public abstract void addToInventory(Targy item);
 
     public ArrayList<Targy> getInventory()
     {
