@@ -7,8 +7,10 @@ public class NPC extends Szereplo
         super(nev);
     }
 
-    public void addItemToNPC(Targy item)
+    @Override
+    public void addToInventory(Targy item)
     {
-        addToInventory(item);
+        inventory.add(item);
     }
+
 }

@@ -1,6 +1,9 @@
 package GUI;
 
 import Backend.*;
+import Exceptions.NevStringException;
+import Exceptions.SulyStringException;
+import Exceptions.TargyNehezException;
 import Main.*;
 
 import javax.swing.*;

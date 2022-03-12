@@ -1,5 +1,7 @@
 package Backend;
 
+import Exceptions.TargyNehezException;
+
 public class Jatekos extends Szereplo
 {
     private double sebesseg;
@@ -10,11 +12,12 @@ public class Jatekos extends Szereplo
         sebesseg=30;
     }
 
-    public void addItemToJatekos(Targy item)
+    @Override
+    public void addToInventory(Targy item)
     {
         if (getosszsuly()+item.getTargySuly()<=maxsebesseg)
         {
-            addToInventory(item);
+            inventory.add(item);
             sebessegSzamol();
         }
         else
