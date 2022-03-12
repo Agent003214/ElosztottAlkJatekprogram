@@ -134,10 +134,7 @@ public class UI extends JFrame
 
         JComboBox<String> Jatekos_rendez_ddl = new JComboBox<>(rendezesi_opciok);
         rendezes_box.add(Jatekos_rendez_ddl);
-        Jatekos_rendez_ddl.addActionListener(e ->
-        {
-            //Rendezés
-        });
+
 
         //ListBox-ok
 
@@ -226,6 +223,7 @@ public class UI extends JFrame
         {
             try
             {
+                NPC_lista.clear();
                 NPC_k.add(m.NPCHozzaAd(NPC_nev_tb.getText()));
                 NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
             }
@@ -287,7 +285,55 @@ public class UI extends JFrame
             }
         });
 
+        Jatekos_rendez_ddl.addActionListener(e ->
+        {
+            if(Jatekos_rendez_ddl.getSelectedItem() == "Név szerint")
+            {
+                jatekosok.get(jatekosok.size()-1).NevSzerintRendez();
+                jatekos_lista.clear();
+                jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
+                jatekos_lista.addElement("Tárgyak:");
 
+                for (int i = 0; i < jatekosok.get(jatekosok.size()-1).getInventory().size(); i++)
+                {
+                    jatekos_lista.addElement("            "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargyNev());
+                    jatekos_lista.addElement("                        "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargySuly());
+                }
+                NPC_k.get(NPC_k.size()-1).NevSzerintRendez();
+                NPC_lista.clear();
+                NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
+                NPC_lista.addElement("Tárgyak:");
+
+                for (int i = 0; i < NPC_k.get(NPC_k.size()-1).getInventory().size(); i++)
+                {
+                    NPC_lista.addElement("            "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargyNev());
+                    NPC_lista.addElement("                        "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargySuly());
+                }
+            }
+            else
+            {
+                jatekosok.get(jatekosok.size()-1).SulySzerintRendez();
+                jatekos_lista.clear();
+                jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
+                jatekos_lista.addElement("Tárgyak:");
+
+                for (int i = 0; i < jatekosok.get(jatekosok.size()-1).getInventory().size(); i++)
+                {
+                    jatekos_lista.addElement("            "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargyNev());
+                    jatekos_lista.addElement("                        "+jatekosok.get(jatekosok.size()-1).getInventory().get(i).getTargySuly());
+                }
+                NPC_k.get(NPC_k.size()-1).SulySzerintRendez();
+                NPC_lista.clear();
+                NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
+                NPC_lista.addElement("Tárgyak:");
+
+                for (int i = 0; i < NPC_k.get(NPC_k.size()-1).getInventory().size(); i++)
+                {
+                    NPC_lista.addElement("            "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargyNev());
+                    NPC_lista.addElement("                        "+NPC_k.get(NPC_k.size()-1).getInventory().get(i).getTargySuly());
+                }
+            }
+        });
 
 
         pack();
