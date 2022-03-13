@@ -70,37 +70,46 @@ public class FileInputOutput
             items=new ArrayList<>();
             nonplayer=new ArrayList<>();
             Scanner sc=new Scanner(file);
-            if (sc.nextLine().equals("Tárgyak"))
+            ArrayList<String> beolvas=new ArrayList<>();
+            while (sc.hasNextLine())
             {
-                while (sc.nextLine().equals("*"))
+                beolvas.add(sc.nextLine());
+            }
+            int i=0;
+            if (beolvas.get(i).equals("Tárgyak"))
+            {
+                i++;
+                while (!beolvas.get(i).equals("*"))
                 {
-                    String[] line=sc.nextLine().split(";");
+                    String[] line=beolvas.get(i).split(";");
                     items.add(new Targy(line[0],Double.parseDouble(line[1])));
-                }
-                if (sc.nextLine().equals("Játékos"))
-                {
-                    player.add(new Jatekos(sc.nextLine()));
-                    while (sc.nextLine().equals("$"))
-                    {
-                        String[] line=sc.nextLine().split(";");
-                        player.get(0).addToInventory(ItemKeres(line[0],items));
-                    }
-                }
-                if (sc.nextLine().equals("NPC"))
-                {
-                    nonplayer.add(new NPC(sc.nextLine()));
-                    while (sc.hasNextLine())
-                    {
-                        String[] line=sc.nextLine().split(";");
-                        nonplayer.get(0).addToInventory(ItemKeres(line[0],items));
-                    }
+                    i++;
                 }
             }
             else
             {
-                System.out.println(":D");throw new IOException();
+                throw new IOException();
             }
-
+            if (beolvas.get(i).equals("Játékos"))
+            {
+                i++;
+                while (!beolvas.get(i).equals("$"))
+                {
+                    String[] line=beolvas.get(i).split(";");
+                    player.get(0).addToInventory(ItemKeres(line[0],items));
+                    i++;
+                }
+            }
+            if (beolvas.get(i).equals("NPC"))
+            {
+                i++;
+                while (beolvas.size()>i)
+                {
+                    String[] line=beolvas.get(i).split(";");
+                    nonplayer.get(0).addToInventory(ItemKeres(line[0],items));
+                    i++;
+                }
+            }
             sc.close();
             ArrayList<ArrayList> result=new ArrayList<>();
             result.add(player);
