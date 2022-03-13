@@ -123,7 +123,7 @@ public class FileInputOutput
             if (beolvas.get(i).equals("NPC"))
             {
                 i++;
-                if (beolvas.get(i)!=null)
+                if (beolvas.size()>i)
                 {
                     nonplayer.add(new NPC(beolvas.get(i)));
                     i++;
