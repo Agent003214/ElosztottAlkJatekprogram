@@ -26,34 +26,47 @@ public class FileInputOutput
 
         try (FileOutputStream fos = new FileOutputStream(file))
         {
-            data="Tárgyak".getBytes(StandardCharsets.UTF_8);
+            data="Tárgyak\n".getBytes(StandardCharsets.UTF_8);
             String seged;
             fos.write(data);
-            for (int i = 0; i < items.size(); i++)
+            if (items.size()>0)
             {
-                seged=items.get(i).getTargyNev()+";"+items.get(i).getTargySuly();
+                for (int i = 0; i < items.size(); i++)
+                {
+                    seged=items.get(i).getTargyNev()+";"+items.get(i).getTargySuly()+"\n";
+                    data=seged.getBytes(StandardCharsets.UTF_8);
+                    fos.write(data);
+                }
+            }
+            fos.write("*\nJátékos\n".getBytes(StandardCharsets.UTF_8));
+            if (player.size()>0)
+            {
+                seged=player.get(0).getSzereploNev()+"\n";
                 data=seged.getBytes(StandardCharsets.UTF_8);
                 fos.write(data);
+                for (int i = 0; i < player.get(0).getInventory().size(); i++)
+                {
+                    seged=player.get(0).getInventory().get(i).getTargyNev()+";"+
+                            player.get(0).getInventory().get(i).getTargySuly()+"\n";
+                    data=seged.getBytes(StandardCharsets.UTF_8);
+                    fos.write(data);
+                }
             }
-            fos.write("*".getBytes(StandardCharsets.UTF_8));
-            data=player.get(0).getSzereploNev().getBytes(StandardCharsets.UTF_8);
-            fos.write(data);
-            for (int i = 0; i < player.size(); i++)
+            seged="$\nNPC\n";
+            fos.write(seged.getBytes(StandardCharsets.UTF_8));
+            if (nonplayer.size()>0)
             {
-                seged=player.get(0).getInventory().get(i).getTargyNev()+";"+
-                        player.get(0).getInventory().get(i).getTargySuly();
-                data=seged.getBytes(StandardCharsets.UTF_8);
-                fos.write(data);
+                seged=nonplayer.get(0).getSzereploNev()+"\n";
+                fos.write(seged.getBytes(StandardCharsets.UTF_8));
+                for (int i = 0; i < nonplayer.get(0).getInventory().size(); i++)
+                {
+                    seged=nonplayer.get(0).getInventory().get(i).getTargyNev()+";"+
+                            nonplayer.get(0).getInventory().get(i).getTargySuly();
+                    data=seged.getBytes(StandardCharsets.UTF_8);
+                    fos.write(data);
+                }
             }
-            fos.write("$".getBytes(StandardCharsets.UTF_8));
-            fos.write(nonplayer.get(0).getSzereploNev().getBytes(StandardCharsets.UTF_8));
-            for (int i = 0; i < nonplayer.size(); i++)
-            {
-                seged=nonplayer.get(0).getInventory().get(i).getTargyNev()+";"+
-                        nonplayer.get(0).getInventory().get(i).getTargySuly();
-                data=seged.getBytes(StandardCharsets.UTF_8);
-                fos.write(data);
-            }
+
             System.out.println("Successfully written data to the file");
         }
         catch (IOException e)
@@ -94,27 +107,34 @@ public class FileInputOutput
             if (beolvas.get(i).equals("Játékos"))
             {
                 i++;
-                player.add(new Jatekos(beolvas.get(i)));
-                i++;
-                while (!beolvas.get(i).equals("$"))
+                if (!beolvas.get(i).equals("$"))
                 {
-                    String[] line=beolvas.get(i).split(";");
-                    player.get(0).addToInventory(ItemKeres(line[0],items));
+                    player.add(new Jatekos(beolvas.get(i)));
                     i++;
+                    while (!beolvas.get(i).equals("$"))
+                    {
+                        String[] line=beolvas.get(i).split(";");
+                        player.get(0).addToInventory(ItemKeres(line[0],items));
+                        i++;
+                    }
                 }
                 i++;
             }
             if (beolvas.get(i).equals("NPC"))
             {
                 i++;
-                nonplayer.add(new NPC(beolvas.get(i)));
-                i++;
-                while (beolvas.size()>i)
+                if (beolvas.get(i)!=null)
                 {
-                    String[] line=beolvas.get(i).split(";");
-                    nonplayer.get(0).addToInventory(ItemKeres(line[0],items));
+                    nonplayer.add(new NPC(beolvas.get(i)));
                     i++;
+                    while (beolvas.size()>i)
+                    {
+                        String[] line=beolvas.get(i).split(";");
+                        nonplayer.get(0).addToInventory(ItemKeres(line[0],items));
+                        i++;
+                    }
                 }
+
             }
             sc.close();
             ArrayList<ArrayList> result=new ArrayList<>();
