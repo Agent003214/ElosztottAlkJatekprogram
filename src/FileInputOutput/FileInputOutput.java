@@ -12,17 +12,51 @@ import java.util.Scanner;
 
 public class FileInputOutput
 {
-    static String file="mentes.txt";
+    static File file=new File("mentes.txt");
+    private static ArrayList<Jatekos> player;
+    private static ArrayList<Targy> items;
+    private static ArrayList<NPC> nonplayer;
 
-    public static void mentes()
+    public static void mentes(ArrayList<ArrayList> mentendok)
     {
-        byte[] data = "ABCD".getBytes(StandardCharsets.UTF_8);
+        byte[] data;
+        player=mentendok.get(0);
+        nonplayer=mentendok.get(1);
+        items=mentendok.get(2);
 
         try (FileOutputStream fos = new FileOutputStream(file))
         {
+            data="Tárgyak".getBytes(StandardCharsets.UTF_8);
+            String seged;
             fos.write(data);
+            for (int i = 0; i < items.size(); i++)
+            {
+                seged=items.get(i).getTargyNev()+";"+items.get(i).getTargySuly();
+                data=seged.getBytes(StandardCharsets.UTF_8);
+                fos.write(data);
+            }
+            fos.write("*".getBytes(StandardCharsets.UTF_8));
+            data=player.get(0).getSzereploNev().getBytes(StandardCharsets.UTF_8);
+            fos.write(data);
+            for (int i = 0; i < player.size(); i++)
+            {
+                seged=player.get(0).getInventory().get(i).getTargyNev()+";"+
+                        player.get(0).getInventory().get(i).getTargySuly();
+                data=seged.getBytes(StandardCharsets.UTF_8);
+                fos.write(data);
+            }
+            fos.write("$".getBytes(StandardCharsets.UTF_8));
+            fos.write(nonplayer.get(0).getSzereploNev().getBytes(StandardCharsets.UTF_8));
+            for (int i = 0; i < nonplayer.size(); i++)
+            {
+                seged=nonplayer.get(0).getInventory().get(i).getTargyNev()+";"+
+                        nonplayer.get(0).getInventory().get(i).getTargySuly();
+                data=seged.getBytes(StandardCharsets.UTF_8);
+                fos.write(data);
+            }
             System.out.println("Successfully written data to the file");
-        } catch (IOException e)
+        }
+        catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -32,10 +66,9 @@ public class FileInputOutput
     {
         try
         {
-            ArrayList<Jatekos> player=new ArrayList<>();
-            ArrayList<Targy> items=new ArrayList<>();
-            ArrayList<NPC> nonplayer=new ArrayList<>();
-            File file=new File("mentes.txt");
+            player=new ArrayList<>();
+            items=new ArrayList<>();
+            nonplayer=new ArrayList<>();
             Scanner sc=new Scanner(file);
             if (sc.nextLine().equals("Tárgyak"))
             {
@@ -75,8 +108,8 @@ public class FileInputOutput
             result.add(items);
             return result;
         }
-         catch (IOException e)
-         {
+        catch (IOException e)
+        {
             e.printStackTrace();
         }
         throw new RuntimeException();

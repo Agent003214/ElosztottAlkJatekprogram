@@ -61,6 +61,11 @@ public abstract class Szereplo
         }
     }
 
+    public String getSzereploNev()
+    {
+        return nev;
+    }
+
     @Override
     public String toString()
     {
