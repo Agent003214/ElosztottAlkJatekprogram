@@ -19,7 +19,7 @@ public abstract class Szereplo
         return inventory;
     }
 
-    public double getosszsuly()
+    public double getosszsuly()//Kiszámolja az inventory-ban lévő tárgyak összsúlyát
     {
         double seged=0;
         for (int i = 0; i < inventory.size(); i++)
@@ -69,7 +69,6 @@ public abstract class Szereplo
     @Override
     public String toString()
     {
-        String teszt="Név: "+nev;
-        return teszt;
+        return "Név: "+nev;
     }
 }

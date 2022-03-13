@@ -26,25 +26,25 @@ public class FileInputOutput
 
         try (FileOutputStream fos = new FileOutputStream(file))
         {
-            data="Tárgyak\n".getBytes(StandardCharsets.UTF_8);
+            data="Tárgyak\n".getBytes(StandardCharsets.UTF_8);//Tárgyak beleírása a fájlba
             String seged;
             fos.write(data);
             if (items.size()>0)
             {
-                for (int i = 0; i < items.size(); i++)
+                for (int i = 0; i < items.size(); i++)//A tárgyak beleíársa a fájlba
                 {
                     seged=items.get(i).getTargyNev()+";"+items.get(i).getTargySuly()+"\n";
                     data=seged.getBytes(StandardCharsets.UTF_8);
                     fos.write(data);
                 }
             }
-            fos.write("*\nJátékos\n".getBytes(StandardCharsets.UTF_8));
+            fos.write("*\nJátékos\n".getBytes(StandardCharsets.UTF_8));//Játékos beleírása a fájlba
             if (player.size()>0)
             {
                 seged=player.get(0).getSzereploNev()+"\n";
                 data=seged.getBytes(StandardCharsets.UTF_8);
                 fos.write(data);
-                for (int i = 0; i < player.get(0).getInventory().size(); i++)
+                for (int i = 0; i < player.get(0).getInventory().size(); i++)//A játékosnál lévő tágyak beleírása a fájlba
                 {
                     seged=player.get(0).getInventory().get(i).getTargyNev()+";"+
                             player.get(0).getInventory().get(i).getTargySuly()+"\n";
@@ -52,16 +52,16 @@ public class FileInputOutput
                     fos.write(data);
                 }
             }
-            seged="$\nNPC\n";
+            seged="$\nNPC\n";//NPC beleírása a fájlba
             fos.write(seged.getBytes(StandardCharsets.UTF_8));
             if (nonplayer.size()>0)
             {
                 seged=nonplayer.get(0).getSzereploNev()+"\n";
                 fos.write(seged.getBytes(StandardCharsets.UTF_8));
-                for (int i = 0; i < nonplayer.get(0).getInventory().size(); i++)
+                for (int i = 0; i < nonplayer.get(0).getInventory().size(); i++)//Az NPC-nél lévő tárgyak beleírása a fájlba
                 {
                     seged=nonplayer.get(0).getInventory().get(i).getTargyNev()+";"+
-                            nonplayer.get(0).getInventory().get(i).getTargySuly();
+                            nonplayer.get(0).getInventory().get(i).getTargySuly()+"\n";
                     data=seged.getBytes(StandardCharsets.UTF_8);
                     fos.write(data);
                 }
@@ -89,7 +89,7 @@ public class FileInputOutput
                 beolvas.add(sc.nextLine());
             }
             int i=0;
-            if (beolvas.get(i).equals("Tárgyak"))
+            if (beolvas.get(i).equals("Tárgyak"))//Fájlból a tárgyak beolvasása
             {
                 i++;
                 while (!beolvas.get(i).equals("*"))
@@ -104,14 +104,14 @@ public class FileInputOutput
             {
                 throw new IOException();
             }
-            if (beolvas.get(i).equals("Játékos"))
+            if (beolvas.get(i).equals("Játékos"))//Fájlból a játékos beolvasása
             {
                 i++;
                 if (!beolvas.get(i).equals("$"))
                 {
                     player.add(new Jatekos(beolvas.get(i)));
                     i++;
-                    while (!beolvas.get(i).equals("$"))
+                    while (!beolvas.get(i).equals("$"))//játékos tágyai
                     {
                         String[] line=beolvas.get(i).split(";");
                         player.get(0).addToInventory(ItemKeres(line[0],items));
@@ -120,14 +120,14 @@ public class FileInputOutput
                 }
                 i++;
             }
-            if (beolvas.get(i).equals("NPC"))
+            if (beolvas.get(i).equals("NPC"))//Fájlból a NPC beolvasása
             {
                 i++;
                 if (beolvas.size()>i)
                 {
                     nonplayer.add(new NPC(beolvas.get(i)));
                     i++;
-                    while (beolvas.size()>i)
+                    while (beolvas.size()>i)//NPC tárgyai
                     {
                         String[] line=beolvas.get(i).split(";");
                         nonplayer.get(0).addToInventory(ItemKeres(line[0],items));
@@ -150,7 +150,7 @@ public class FileInputOutput
         throw new RuntimeException();
     }
 
-    private static Targy ItemKeres(String nev,ArrayList<Targy> targy)
+    private static Targy ItemKeres(String nev,ArrayList<Targy> targy)//Megkeresi az összes tárgy között az adott tárgyat
     {
         for (int i = 0; i < targy.size(); i++)
         {
