@@ -3,6 +3,7 @@ Lándzsa;3
 Pajzs;5.1
 Tőr;1
 Íj;3
+Nyíl;0.4
 *
 Játékos
 Pista
