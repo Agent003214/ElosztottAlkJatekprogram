@@ -218,6 +218,7 @@ public class UI extends JFrame
                 jatekos_lista.clear();
                 jatekosok.add(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
                 jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
+                jatekos_felvesz_button.setEnabled(false);
             }
             catch (NevStringException exp)
             {
@@ -253,6 +254,7 @@ public class UI extends JFrame
                 NPC_lista.clear();
                 NPC_k.add(m.NPCHozzaAd(NPC_nev_tb.getText()));
                 NPC_lista.addElement(NPC_k.get(NPC_k.size()-1).toString());
+                NPC_felvesz_button.setEnabled(false);
             }
             catch (NevStringException exp)
             {
