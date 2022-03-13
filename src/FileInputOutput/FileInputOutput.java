@@ -85,6 +85,7 @@ public class FileInputOutput
                     items.add(new Targy(line[0],Double.parseDouble(line[1])));
                     i++;
                 }
+                i++;
             }
             else
             {
@@ -93,15 +94,20 @@ public class FileInputOutput
             if (beolvas.get(i).equals("Játékos"))
             {
                 i++;
+                player.add(new Jatekos(beolvas.get(i)));
+                i++;
                 while (!beolvas.get(i).equals("$"))
                 {
                     String[] line=beolvas.get(i).split(";");
                     player.get(0).addToInventory(ItemKeres(line[0],items));
                     i++;
                 }
+                i++;
             }
             if (beolvas.get(i).equals("NPC"))
             {
+                i++;
+                nonplayer.add(new NPC(beolvas.get(i)));
                 i++;
                 while (beolvas.size()>i)
                 {
