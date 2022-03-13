@@ -162,7 +162,11 @@ public class UI extends JFrame
         utility_box.add(mentes_button);
         mentes_button.addActionListener(e ->
         {
-            FileInputOutput.mentes();
+            ArrayList<ArrayList> current = new ArrayList<>();
+            current.add(jatekosok);
+            current.add(NPC_k);
+            current.add(targyak);
+            FileInputOutput.mentes(current);
         });
 
         JButton betolt_button = new JButton("Betöltés");
