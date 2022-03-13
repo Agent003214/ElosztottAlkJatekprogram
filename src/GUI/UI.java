@@ -229,6 +229,11 @@ public class UI extends JFrame
             {
                 JOptionPane.showMessageDialog(null,"A tárgy túl nehéz, nem tudjuk elvinni!","Nincs elég mozgási sebesség!",JOptionPane.INFORMATION_MESSAGE);
             }
+            catch (ArrayIndexOutOfBoundsException exp)
+            {
+                JOptionPane.showMessageDialog(null,"Először egy Játékos felvétele szükséges!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+
+            }
         });
 
 
@@ -258,6 +263,11 @@ public class UI extends JFrame
             catch (TargyNehezException exp)
             {
                 JOptionPane.showMessageDialog(null,"A tárgy túl nehéz, nem tudjuk elvinni!","Nincs elég mozgási sebesség!",JOptionPane.INFORMATION_MESSAGE);
+            }
+            catch (ArrayIndexOutOfBoundsException exp)
+            {
+                JOptionPane.showMessageDialog(null,"Először egy NPC felvétele szükséges!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+
             }
         });
 
@@ -289,6 +299,7 @@ public class UI extends JFrame
             {
                 JOptionPane.showMessageDialog(null,"A név nem megfelelően lett megadva!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
             }
+            pack();
         });
 
         Jatekos_rendez_ddl.addActionListener(e ->
