@@ -25,7 +25,7 @@ public class UI extends JFrame
         setTitle("Játékprogram");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(true);
-
+        setIconImage(Toolkit.getDefaultToolkit().getImage("Sword.jpg"));
 
 
         GridBagLayout layout = new  GridBagLayout();
