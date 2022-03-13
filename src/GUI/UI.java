@@ -179,8 +179,16 @@ public class UI extends JFrame
            NPC_k = result.get(1);
            targyak = result.get(2);
 
-            targyakKiir(jatekos_lista,jatekosok);
-            targyakKiir(NPC_lista,NPC_k);
+           if(jatekosok.size() != 0)
+           {
+               targyakKiir(jatekos_lista,jatekosok);
+           }
+
+           if(NPC_k.size() != 0)
+           {
+               targyakKiir(NPC_lista,NPC_k);
+           }
+
 
             targy_lista.clear();
             jatekos_targy_ddl.removeAllItems();
