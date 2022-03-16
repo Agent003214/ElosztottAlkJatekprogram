@@ -2,6 +2,10 @@ package Backend;
 
 import Exceptions.TargyNehezException;
 
+/**
+ * Szereplő osztály gyereke.
+ * Ekészít egy Játékost.
+ */
 public class Jatekos extends Szereplo
 {
     private double sebesseg;
@@ -12,6 +16,12 @@ public class Jatekos extends Szereplo
         sebesseg=30;
     }
 
+    /**
+     * Hozzáadja a Játékoshoz a beadott tárgyat.
+     * Megnézi, hogy a feltételnek megfelelel, és csak utána adja hozzá a Játékoshoz.
+     * @param item
+     * @throws TargyNehezException
+     */
     @Override
     public void addToInventory(Targy item)
     {
@@ -26,6 +36,9 @@ public class Jatekos extends Szereplo
         }
     }
 
+    /**
+     * Kiszámolja és beállítja a játékos mozgási sebességét.
+     */
     private void sebessegSzamol()
     {
         sebesseg=maxsebesseg-getosszsuly();

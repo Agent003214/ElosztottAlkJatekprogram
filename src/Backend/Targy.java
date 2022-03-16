@@ -5,6 +5,11 @@ public class Targy
     private String nev;
     private double suly;
 
+    /**
+     *Elkészít egy tárgyat.
+     * @param nev
+     * @param suly
+     */
     public Targy(String nev, double suly)
     {
         this.nev = nev;

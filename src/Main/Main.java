@@ -44,8 +44,12 @@ public class Main
         return new Targy(nev,checkSulyString(suly));
     }
 
-    //Megnézi, hogy nincs-e baj a név TexBox-ból bekért adattal
-    //Ha hiba van benne, exception-t bod
+    /**
+     * Megnézi a bekért String-et, hogy nem üres.
+     * @param nev A leellenőrizendő String.
+     * @return Igaz, ha megfelelő a String. Hamis, ha üres.
+     * @throws NevStringException
+     */
     private boolean checkNevString(String nev)
     {
         if (nev.length()>0 && nev!=null)
@@ -58,8 +62,12 @@ public class Main
         }
     }
 
-    //Megnézi, hogy nincs-e baj a súly TexBox-ból bekért adattal
-    //Ha hiba van benne, exception-t bod
+    /**
+     * Leellenőrzni, hogy String-ből át lehet konvertálni Double típusúra.
+     * @param suly Ellenőrizendő súly String-ként.
+     * @return Az átkonvertált súly.
+     * @throws SulyStringException Ha a konverzió nem lehetséges.
+     */
     private double checkSulyString(String suly)
     {
         try

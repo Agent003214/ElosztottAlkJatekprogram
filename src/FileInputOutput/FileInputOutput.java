@@ -10,6 +10,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * Lekezeli a fájlba mentést és fájlból a betöltést.
+ */
 public class FileInputOutput
 {
     static File file=new File("mentes.txt");
@@ -17,6 +20,11 @@ public class FileInputOutput
     private static ArrayList<Targy> items;
     private static ArrayList<NPC> nonplayer;
 
+    /**
+     *Elkészít egy szöveges fájlt és lementi a program jelenlegi állapotát.
+     * @param mentendok Egy ArrayList ami magába foglalja azokat az ArrayList-eket amik a Játékosokat, az NPC-ket és a Tárgyakat tartalmazzák.
+     * @throws IOException
+     */
     public static void mentes(ArrayList<ArrayList> mentendok)
     {
         byte[] data;
@@ -75,6 +83,12 @@ public class FileInputOutput
         }
     }
 
+    /**
+     * Egy fájl tartalmát beolvassa.
+     * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
+     * @throws IOException
+     * @throws RuntimeException
+     */
     public static ArrayList<ArrayList> betolt()
     {
         try
@@ -150,6 +164,13 @@ public class FileInputOutput
         throw new RuntimeException();
     }
 
+    /**
+     * A beadott nevű tárgyat megkeresi az összes létező tárgy között.
+     * @param nev A keresendő tárgy neve.
+     * @param targy Az összes tárgy listája.
+     * @return A megtalált tárgy.
+     * @throws RuntimeException Ha nem létezik a keresett tárgy az összes tárgy között.
+     */
     private static Targy ItemKeres(String nev,ArrayList<Targy> targy)//Megkeresi az összes tárgy között az adott tárgyat
     {
         for (int i = 0; i < targy.size(); i++)

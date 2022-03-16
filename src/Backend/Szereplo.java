@@ -19,7 +19,11 @@ public abstract class Szereplo
         return inventory;
     }
 
-    public double getosszsuly()//Kiszámolja az inventory-ban lévő tárgyak összsúlyát
+    /**
+     * Összeadja az inventory-ban lévő összes tárgy súlyát.
+     * @return A tárgyak összsúlya.
+     */
+    public double getosszsuly()
     {
         double seged=0;
         for (int i = 0; i < inventory.size(); i++)
@@ -29,6 +33,9 @@ public abstract class Szereplo
         return seged;
     }
 
+    /**
+     * A tárgyakat név szerint rendezi ÁBC sorredbe.
+     */
     public void NevSzerintRendez()
     {
         int n = inventory.size();
@@ -45,6 +52,9 @@ public abstract class Szereplo
         }
     }
 
+    /**
+     * A tárgyakat rendezi súly szerint növekvő sorrendbe.
+     */
     public void SulySzerintRendez()
     {
         int n = inventory.size();
