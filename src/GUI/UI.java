@@ -12,6 +12,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * UI osztály ami elkészíti a grafikus felületet
+ */
 public class UI extends JFrame
 {
     private ArrayList<Targy> targyak = new ArrayList<>();
@@ -20,6 +23,10 @@ public class UI extends JFrame
     private ArrayList<NPC> NPC_k = new ArrayList<NPC>();
 
     private Main m = new Main();
+
+    /**
+     * A konstruktor létrehozza a grafikus felületetet, felrakja a komponenseket
+     */
     public UI()
     {
         setTitle("Játékprogram");
@@ -335,6 +342,19 @@ public class UI extends JFrame
 
         pack();
     }
+
+    /**
+     * Hozzáad egy komponenst a contaniner-hez a GridBagLayout használatával a megadott paraméterek alapján
+     *
+     * @param component A komponens amit fel akarunk rakni
+     * @param container A container amibe bele akarjuk rakni a komponenst
+     * @param layout    A GridBagLayout amit használni akarunk
+     * @param gbc       A GridBagConstraints amit használunk a layout-hoz
+     * @param gridx     Az x koordináta a gbc-hez
+     * @param gridy     Az y koordináta a gbc-hez
+     * @param gridwidth A szélessége a beadott komponensnek a többhez viszonyítva
+     * @param gridheigth A magassága a beadaott komponensnek a többihez viszonyítva
+     * */
     private void addobjects(Component component, Container container, GridBagLayout layout, GridBagConstraints gbc, int gridx, int gridy, int gridwidth, int gridheigth)
     {
 
@@ -347,6 +367,13 @@ public class UI extends JFrame
         layout.setConstraints(component, gbc);
         container.add(component);
     }
+
+    /**
+     * Hozzáadja a beadott DefaultListModel-hez a beadott ArrayList Játékos vagy NPC tárgyait
+     *
+     * @param lista A DefaultListModel ami a JList mögött fut, amibe ki akarunk írni
+     * @param list  Az ArrayList ami tartalmazza a Játékost vagy NPC-t aki tárgyait ki akarjuk írni
+     */
     private void targyakKiir (DefaultListModel<String> lista, ArrayList<? extends Szereplo> list)
     {
         lista.clear();

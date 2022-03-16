@@ -9,14 +9,20 @@ import javax.swing.*;
 
 public class Main
 {
-
+    /**
+     * Elindítja a programot, létrehoz egy UI grafikus felület példányt és lekéri a futtató operációs rendszer által használt grafikus témát
+     *
+     * @param args Nem használt
+     */
     public static void main(String[] args)
     {
 
-        try {
+        try
+        {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ignored) {
         }
+        catch (Exception ignored)
+        {}
         SwingUtilities.invokeLater(() -> new UI().setVisible(true));
     }
 
