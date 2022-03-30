@@ -32,50 +32,48 @@ public class FileInputOutput
         nonplayer=mentendok.get(1);
         items=mentendok.get(2);
 
-        try (FileOutputStream fos = new FileOutputStream(file))
+        try (FileOutputStream filebair = new FileOutputStream(file))
         {
             data="Tárgyak\n".getBytes(StandardCharsets.UTF_8);//Tárgyak beleírása a fájlba
             String seged;
-            fos.write(data);
+            filebair.write(data);
             if (items.size()>0)
             {
                 for (int i = 0; i < items.size(); i++)//A tárgyak beleíársa a fájlba
                 {
                     seged=items.get(i).getTargyNev()+";"+items.get(i).getTargySuly()+"\n";
                     data=seged.getBytes(StandardCharsets.UTF_8);
-                    fos.write(data);
+                    filebair.write(data);
                 }
             }
-            fos.write("*\nJátékos\n".getBytes(StandardCharsets.UTF_8));//Játékos beleírása a fájlba
+            filebair.write("*\nJátékos\n".getBytes(StandardCharsets.UTF_8));//Játékos beleírása a fájlba
             if (player.size()>0)
             {
                 seged=player.get(0).getSzereploNev()+"\n";
                 data=seged.getBytes(StandardCharsets.UTF_8);
-                fos.write(data);
+                filebair.write(data);
                 for (int i = 0; i < player.get(0).getInventory().size(); i++)//A játékosnál lévő tágyak beleírása a fájlba
                 {
                     seged=player.get(0).getInventory().get(i).getTargyNev()+";"+
                             player.get(0).getInventory().get(i).getTargySuly()+"\n";
                     data=seged.getBytes(StandardCharsets.UTF_8);
-                    fos.write(data);
+                    filebair.write(data);
                 }
             }
             seged="$\nNPC\n";//NPC beleírása a fájlba
-            fos.write(seged.getBytes(StandardCharsets.UTF_8));
+            filebair.write(seged.getBytes(StandardCharsets.UTF_8));
             if (nonplayer.size()>0)
             {
                 seged=nonplayer.get(0).getSzereploNev()+"\n";
-                fos.write(seged.getBytes(StandardCharsets.UTF_8));
+                filebair.write(seged.getBytes(StandardCharsets.UTF_8));
                 for (int i = 0; i < nonplayer.get(0).getInventory().size(); i++)//Az NPC-nél lévő tárgyak beleírása a fájlba
                 {
                     seged=nonplayer.get(0).getInventory().get(i).getTargyNev()+";"+
                             nonplayer.get(0).getInventory().get(i).getTargySuly()+"\n";
                     data=seged.getBytes(StandardCharsets.UTF_8);
-                    fos.write(data);
+                    filebair.write(data);
                 }
             }
-
-            System.out.println("Successfully written data to the file");
         }
         catch (IOException e)
         {
@@ -87,10 +85,8 @@ public class FileInputOutput
      * Egy fájl tartalmát beolvassa.
      * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
      * @throws IOException
-     * @throws RuntimeException
      */
-    public static ArrayList<ArrayList> betolt()
-    {
+    public static ArrayList<ArrayList> betolt() throws IOException {
         try
         {
             player=new ArrayList<>();
@@ -157,11 +153,11 @@ public class FileInputOutput
             result.add(items);
             return result;
         }
-        catch (IOException e)
+        catch (FileNotFoundException e)
         {
-            e.printStackTrace();
+
         }
-        throw new RuntimeException();
+        throw new IOException();
     }
 
     /**
