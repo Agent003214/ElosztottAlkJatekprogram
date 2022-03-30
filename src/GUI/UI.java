@@ -9,6 +9,7 @@ import Main.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -181,34 +182,39 @@ public class UI extends JFrame
         utility_box.add(betolt_button);
         betolt_button.addActionListener(e ->
         {
-           ArrayList<ArrayList> result = FileInputOutput.betolt();
-           jatekosok = result.get(0);
-           NPC_k = result.get(1);
-           targyak = result.get(2);
-
-           if(jatekosok.size() != 0)
-           {
-               targyakKiir(jatekos_lista,jatekosok);
-           }
-
-           if(NPC_k.size() != 0)
-           {
-               targyakKiir(NPC_lista,NPC_k);
-           }
-
-
-            targy_lista.clear();
-            jatekos_targy_ddl.removeAllItems();
-            NPC_targy_ddl.removeAllItems();
-            for (Targy targy : targyak)
+            ArrayList<ArrayList> result;
+            try
             {
-                targy_lista.addElement(targy.toString());   //Az hogy mi lesz kiírva a toString-től függ!
+                result = FileInputOutput.betolt();
+                jatekosok = result.get(0);
+                NPC_k = result.get(1);
+                targyak = result.get(2);
 
-                jatekos_targy_ddl.addItem(targy);           //Dropdow a játékosokhoz
+                if(jatekosok.size() != 0)
+                {
+                    targyakKiir(jatekos_lista,jatekosok);
+                }
 
-                NPC_targy_ddl.addItem(targy);               //Dropdow az NPC-khez
+                if(NPC_k.size() != 0)
+                {
+                    targyakKiir(NPC_lista,NPC_k);
+                }
+                targy_lista.clear();
+                jatekos_targy_ddl.removeAllItems();
+                NPC_targy_ddl.removeAllItems();
+                for (Targy targy : targyak)
+                {
+                    targy_lista.addElement(targy.toString());   //Az hogy mi lesz kiírva a toString-től függ!
+
+                    jatekos_targy_ddl.addItem(targy);           //Dropdow a játékosokhoz
+
+                    NPC_targy_ddl.addItem(targy);               //Dropdow az NPC-khez
+                }
             }
-
+            catch (FileNotFoundException ex)
+            {
+                JOptionPane.showMessageDialog(null,"A böltés sikertelen volt, a mentett fájl nem található!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+            }
         });
 
         JButton kilep_button = new JButton("Kilépés");

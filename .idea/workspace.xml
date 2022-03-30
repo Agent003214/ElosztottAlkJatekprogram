@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="dad56850-0d56-437b-95ef-20b7bf18589f" name="Changes" comment="ListBox-ok hozzáadva">
+    <list default="true" id="dad56850-0d56-437b-95ef-20b7bf18589f" name="Changes" comment="Dokumentáció hozzáadva a UI osztályhoz és metódusaihoz és a Main osztály main metódusához">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/Jatekos.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/Jatekos.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/NPC.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/NPC.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/GUI/UI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/GUI/UI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mentes.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/Jatekos.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/NPC.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/Szereplo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/Backend/Targy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ElosztottAlkJatekprogram/GUI/UI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/FileInputOutput/FileInputOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileInputOutput/FileInputOutput.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GUI/UI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/UI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -94,14 +97,25 @@
   <component name="PropertiesComponent">
     <property name="ToolWindowGit.ShowToolbar" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Kész tantárgyak/Programozás alapok/LayoutManager" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Iskola\GDF\Elosztott Alkalmazások\ElosztottAlkJatekprogram\src" />
+    </key>
   </component>
   <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="Main.Main" />
       <module name="ElosztottAlkJatekprogram" />
-      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -170,7 +184,49 @@
       <option name="project" value="LOCAL" />
       <updated>1646571160832</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Javított txt">
+      <created>1647188183579</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1647188183579</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Icon frissítve">
+      <created>1647188863543</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1647188863543</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Tárgy felvétele ha nincs Játékos/NPC bug javítva">
+      <created>1647190024704</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1647190024704</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Betöltési bug javítva, ha nincs játékos vagy NPC akkor már nem száll el a program">
+      <created>1647190801783</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1647190801783</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Játékos és NPC gomb mostantól elszürkül használat után hogy csak egy játékost és NPC-t lehessen felvenni">
+      <created>1647191919585</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1647191919585</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Dokumentáció hozzáadva a UI osztályhoz és metódusaihoz és a Main osztály main metódusához">
+      <created>1647428418778</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1647428418778</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,7 +239,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Játékos panel befejezve, combobox-hoz tárgyak hozzárendelve&#10;NPC panel befejezve" />
@@ -193,6 +248,22 @@
     <MESSAGE value="Utility gombok hozzáadva, size lecserélve pack-re" />
     <MESSAGE value="Exit gomb konfigurálva" />
     <MESSAGE value="Mentés és Betöltés ActionListener hozzáadva, konfiguráció szükséges" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mentés és Betöltés ActionListener hozzáadva, konfiguráció szükséges" />
+    <MESSAGE value="Javított txt" />
+    <MESSAGE value="Icon frissítve" />
+    <MESSAGE value="Tárgy felvétele ha nincs Játékos/NPC bug javítva" />
+    <MESSAGE value="Betöltési bug javítva, ha nincs játékos vagy NPC akkor már nem száll el a program" />
+    <MESSAGE value="Játékos és NPC gomb mostantól elszürkül használat után hogy csak egy játékost és NPC-t lehessen felvenni" />
+    <MESSAGE value="Dokumentáció hozzáadva a UI osztályhoz és metódusaihoz és a Main osztály main metódusához" />
+    <option name="LAST_COMMIT_MESSAGE" value="Dokumentáció hozzáadva a UI osztályhoz és metódusaihoz és a Main osztály main metódusához" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.ArrayIndexOutOfBoundsException" package="java.lang" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -6,6 +6,7 @@ import Backend.Targy;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -84,11 +85,10 @@ public class FileInputOutput
     /**
      * Egy fájl tartalmát beolvassa.
      * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
-     * @throws IOException
+     * @throws FileNotFoundException Ha a forrásfájl nem található
      */
-    public static ArrayList<ArrayList> betolt() throws IOException {
-        try
-        {
+    public static ArrayList<ArrayList> betolt() throws FileNotFoundException
+    {
             player=new ArrayList<>();
             items=new ArrayList<>();
             nonplayer=new ArrayList<>();
@@ -112,7 +112,7 @@ public class FileInputOutput
             }
             else
             {
-                throw new IOException();
+                throw new RuntimeException("A beolvasandó fájl nem megfelelő struktúrájú volt");
             }
             if (beolvas.get(i).equals("Játékos"))//Fájlból a játékos beolvasása
             {
@@ -153,12 +153,6 @@ public class FileInputOutput
             result.add(items);
             return result;
         }
-        catch (FileNotFoundException e)
-        {
-
-        }
-        throw new IOException();
-    }
 
     /**
      * A beadott nevű tárgyat megkeresi az összes létező tárgy között.
