@@ -2,8 +2,8 @@ package Main;
 
 import Exceptions.NevStringException;
 import Exceptions.SulyStringException;
-import GUI.JavaFXUI;
-import GUI.UI;
+import GUI.GUIChooser;
+import GUI.JavaFXUI.JavaFXUI;
 import Backend.*;
 import javafx.application.Application;
 
@@ -18,15 +18,13 @@ public class Main
      */
     public static void main(String[] args)
     {
-
-        Application.launch(JavaFXUI.class);
-     /*   try
+        try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception ignored)
         {}
-        SwingUtilities.invokeLater(() -> new UI().setVisible(true)); */
+        SwingUtilities.invokeLater(() -> new GUIChooser().setVisible(true));
     }
 
     public Jatekos JatekosHozzaAd(String nev)

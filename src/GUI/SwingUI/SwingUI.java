@@ -1,4 +1,4 @@
-package GUI;
+package GUI.SwingUI;
 
 import Backend.*;
 import Exceptions.NevStringException;
@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * UI osztály ami elkészíti a grafikus felületet
  */
-public class UI extends JFrame
+public class SwingUI extends JFrame
 {
     private ArrayList<Targy> targyak = new ArrayList<>();
     private ArrayList<Jatekos> jatekosok = new ArrayList<>();
@@ -28,7 +28,7 @@ public class UI extends JFrame
     /**
      * A konstruktor létrehozza a grafikus felületetet, felrakja a komponenseket
      */
-    public UI()
+    public SwingUI()
     {
         setTitle("Játékprogram");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -347,6 +347,7 @@ public class UI extends JFrame
 
 
         pack();
+        setLocation(SwingUI.calcualteTheMiddleOfTheScreen(getWidth(),getHeight()));
     }
 
     /**
@@ -391,5 +392,19 @@ public class UI extends JFrame
             lista.addElement("            "+list.get(list.size()-1).getInventory().get(i).getTargyNev());
             lista.addElement("                        "+list.get(list.size()-1).getInventory().get(i).getTargySuly());
         }
+    }
+
+    /**
+     * Kiszámolja hogy hol van a jelenlegi szélesség és magasság szerint az ideális pont ahol az ablak a képernyő közepén fog megjelenni
+     * @param width A Jframe szélessége
+     * @param height A Jframe magassága
+     * @return Egy pontot ami a képernyő közepére fogja rakni az ablakot
+     */
+    public static Point calcualteTheMiddleOfTheScreen(int width, int height)
+    {
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (dimension.width/2 - width/2);
+        int y = (dimension.height/2 - height/2);
+        return new Point(x,y);
     }
 }
