@@ -10,6 +10,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class JavaFXUI extends Application
 {
     @Override
@@ -114,6 +117,21 @@ public class JavaFXUI extends Application
         rendezes_panel.add(rendezes_ddl,1,0);
 
         gridPane.add(rendezes_panel,0,2);
+
+        //ListBox-ok
+
+        ListView<String> jatekos_lista = new ListView<String>();
+        jatekos_lista.setPrefSize(300,150);
+        gridPane.add(jatekos_lista,0,3);
+
+        ListView<String> NPC_lista = new ListView<String>();
+        NPC_lista.setPrefSize(300,150);
+        gridPane.add(NPC_lista,1,3);
+
+        ListView<String> targy_lista = new ListView<String>();
+        targy_lista.setPrefSize(300,150);
+        gridPane.add(targy_lista,2,3);
+
 
         Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
