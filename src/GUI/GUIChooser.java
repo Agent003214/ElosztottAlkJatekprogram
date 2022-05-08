@@ -7,8 +7,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * A GUIChooser osztály célja hogy lehetőséget adjon arra hogy a felhasználó választhasson Swing és JavaFX között
+ */
 public class GUIChooser extends JFrame
 {
+    /**
+     * A konstruktor Swing komponenseket pakol fel és létrehozza az ablakot
+     */
     public GUIChooser()
     {
         setTitle("GUI választó");

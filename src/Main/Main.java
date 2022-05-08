@@ -3,9 +3,7 @@ package Main;
 import Exceptions.NevStringException;
 import Exceptions.SulyStringException;
 import GUI.GUIChooser;
-import GUI.JavaFXUI.JavaFXUI;
 import Backend.*;
-import javafx.application.Application;
 
 import javax.swing.*;
 

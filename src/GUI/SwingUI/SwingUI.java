@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * UI osztály ami elkészíti a grafikus felületet
+ * SwingUI osztály ami elkészíti a Swing grafikus felületet
  */
 public class SwingUI extends JFrame
 {
