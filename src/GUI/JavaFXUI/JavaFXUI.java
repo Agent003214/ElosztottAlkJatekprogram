@@ -132,6 +132,24 @@ public class JavaFXUI extends Application
         targy_lista.setPrefSize(300,150);
         gridPane.add(targy_lista,2,3);
 
+        //Utility gombok
+
+        GridPane utility_panel = new GridPane();
+        utility_panel.setVgap(15);
+        utility_panel.setHgap(15);
+
+        Button mentes_bt = new Button("Mentés");
+        Button betoltes_bt = new Button("Betöltés");
+        Button kilepes_bt = new Button("Kilépés");
+
+        utility_panel.add(mentes_bt,0,0);
+        utility_panel.add(betoltes_bt,1,0);
+        utility_panel.add(kilepes_bt,2,0);
+
+        kilepes_bt.setOnAction(event -> System.exit(0));
+
+        utility_panel.setAlignment(Pos.CENTER);
+        gridPane.add(utility_panel,1,4);
 
         Scene scene = new Scene(gridPane);
         primaryStage.setScene(scene);
