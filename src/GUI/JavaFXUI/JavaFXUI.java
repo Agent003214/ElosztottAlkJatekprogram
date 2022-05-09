@@ -6,12 +6,15 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Objects;
 
 public class JavaFXUI extends Application
 {
@@ -20,12 +23,12 @@ public class JavaFXUI extends Application
     {
         Border black = new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(8), new BorderWidths(2)));
         primaryStage.setTitle("Játékprogram");
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Shield.png")));
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(15));
         gridPane.setVgap(15);
         gridPane.setHgap(15);
         gridPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-
         // Játékos panel és komponensei
 
         GridPane jatekos_panel = new GridPane();
