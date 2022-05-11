@@ -22,6 +22,11 @@ public class FileInputOutput
     private static ArrayList<Targy> items;
     private static ArrayList<NPC> nonplayer;
 
+    /**
+     * Lementi a program jelenlegi állapotát egy Json fájlba
+     * @param mentendok Egy ArrayList ami magába foglalja azokat az ArrayList-eket amik a Játékosokat, az NPC-ket és a Tárgyakat tartalmazzák.
+     * @throws IOException
+     */
     public static void mentes(ArrayList<ArrayList> mentendok)
     {
         JSONObject obj=new JSONObject();
@@ -68,9 +73,6 @@ public class FileInputOutput
             obj.put("NPC",npcJson);
         }
 
-
-
-
         try(FileWriter file=new FileWriter("mentes.json"))
         {
             file.write(obj.toJSONString());
@@ -81,6 +83,12 @@ public class FileInputOutput
         }
     }
 
+    /**
+     * JSONObject típusú objektumot hoz létre a beadott adatokból
+     * @param itemName
+     * @param itemWeight
+     * @return JSONObject
+     */
     private static JSONObject itemJsonAdd(String itemName, Double itemWeight)
     {
         JSONObject item=new JSONObject();
@@ -90,7 +98,11 @@ public class FileInputOutput
     }
 
 
-
+    /**
+     * Beolvassa és betölti egy Json fájlból az adatokat.
+     * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
+     * @throws FileNotFoundException Ha nem található a beolvasandó fájl
+     */
     public static ArrayList<ArrayList> betolt() throws FileNotFoundException
     {
         player=new ArrayList<>();
@@ -114,7 +126,6 @@ public class FileInputOutput
                 }
             }
 
-
             //Player-ek
             JSONObject readPlayer1 = (JSONObject) jsonObject.get("Player");
             if (readPlayer1 != null)
@@ -129,7 +140,6 @@ public class FileInputOutput
                     player.get(0).addToInventory(ItemKeres(name,weight,items));
                 }
             }
-
 
             //NPC-k
             JSONObject readNPC1 = (JSONObject) jsonObject.get("NPC");
@@ -148,6 +158,10 @@ public class FileInputOutput
             }
 
         }
+        catch (FileNotFoundException e)
+        {
+            throw new FileNotFoundException();
+        }
         catch (IOException e)
         {
 
@@ -165,9 +179,9 @@ public class FileInputOutput
     }
 
     /**
-     *Elkészít egy szöveges fájlt és lementi a program jelenlegi állapotát.
+     *Elkészít egy szöveges fájlt és lementi a program jelenlegi állapotát egy TXT fájlba.
      * @param mentendok Egy ArrayList ami magába foglalja azokat az ArrayList-eket amik a Játékosokat, az NPC-ket és a Tárgyakat tartalmazzák.
-     * @throws IOException
+     * @throws IOException Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
      */
     public static void mentesLegacy(ArrayList<ArrayList> mentendok)
     {
@@ -226,7 +240,7 @@ public class FileInputOutput
     }
 
     /**
-     * Egy fájl tartalmát beolvassa.
+     * Egy TXT fájl tartalmát beolvassa.
      * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
      * @throws FileNotFoundException Ha a forrásfájl nem található
      */
@@ -316,6 +330,14 @@ public class FileInputOutput
         throw new RuntimeException();
     }
 
+    /**
+     * A beadott nevű tárgyat megkeresi az összes létező tárgy között.
+     * @param nev A keresendő tárgy neve.
+     * @param suly A keresendő tárgy súlya.
+     * @param targy Az összes tárgy listája.
+     * @return A megtalált tárgy.
+     * @throws RuntimeException Ha nem létezik a keresett tárgy az összes tárgy között.
+     */
     private static Targy ItemKeres(String nev,Double suly,ArrayList<Targy> targy)//Megkeresi az összes tárgy között az adott tárgyat
     {
         for (int i = 0; i < targy.size(); i++)
