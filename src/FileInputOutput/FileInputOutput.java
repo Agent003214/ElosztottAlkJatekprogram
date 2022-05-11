@@ -1,15 +1,16 @@
 package FileInputOutput;
 import Backend.Jatekos;
 import Backend.NPC;
-import Backend.Szereplo;
 import Backend.Targy;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
+
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Lekezeli a fájlba mentést és fájlból a betöltést.
@@ -21,12 +22,107 @@ public class FileInputOutput
     private static ArrayList<Targy> items;
     private static ArrayList<NPC> nonplayer;
 
+    public static void mentes(ArrayList<ArrayList> mentendok)
+    {
+        JSONObject obj=new JSONObject();
+        player=mentendok.get(0);
+        nonplayer=mentendok.get(1);
+        items=mentendok.get(2);
+
+        JSONObject itemJson=new JSONObject();
+        for (int i = 0; i < items.size(); i++)
+        {
+            itemJson.put("Item"+i, itemJsonAdd(items.get(i).getTargyNev(),items.get(i).getTargySuly()));
+        }
+        obj.put("Items",itemJson);
+
+        JSONObject playerJson=new JSONObject();
+        playerJson.put("Name",player.get(0).getSzereploNev());
+        JSONObject playerInventory=new JSONObject();
+
+        for (int i = 0; i < player.get(0).getInventory().size(); i++)
+        {
+            playerInventory.put("inventoryItem"+i,itemJsonAdd(player.get(0).getInventory().get(i).getTargyNev(), player.get(0).getInventory().get(i).getTargySuly()));
+        }
+        playerJson.put("Inventory",playerInventory);
+
+        obj.put("Player",playerJson);
+
+
+
+        try(FileWriter file=new FileWriter("mentes.json"))
+        {
+            file.write(obj.toJSONString());
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private static JSONObject itemJsonAdd(String itemName, Double itemWeight)
+    {
+        JSONObject item=new JSONObject();
+        item.put("ItemName",itemName);
+        item.put("ItemWeight",itemWeight);
+        return item;
+    }
+
+
+
+    public static ArrayList<ArrayList> betolt() throws FileNotFoundException
+    {
+        player=new ArrayList<>();
+        items=new ArrayList<>();
+        nonplayer=new ArrayList<>();
+        JSONParser parser=new JSONParser();
+        try(Reader reader=new FileReader("mentes.json"))
+        {
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+            //Item-ek
+            JSONObject readItem1= (JSONObject) jsonObject.get("Items");
+            for (int i = 0; i < readItem1.size(); i++)
+            {
+                JSONObject readItem2 = (JSONObject) readItem1.get("Item"+i);
+                String name=(String) readItem2.get("ItemName");
+                Double weight=(Double) readItem2.get("ItemWeight");
+                /*System.out.println(name);
+                System.out.println(weight);*/
+                items.add(new Targy(name,weight));
+            }
+
+            //Player-ek
+            JSONObject readPlayer1 = (JSONObject) jsonObject.get("Player");
+            System.out.println(readPlayer1.get("Name"));
+            JSONObject readPlayer2 = (JSONObject) readPlayer1.get("Inventory");
+            for (int i = 0; i < readPlayer2.size(); i++)
+            {
+                JSONObject readPlayer3 = (JSONObject) readPlayer2.get("inventoryItem"+i);
+                String name=(String) readPlayer3.get("ItemName");
+                Double weight=(Double) readPlayer3.get("ItemWeight");
+                System.out.println(name);
+                System.out.println(weight);
+            }
+        }
+        catch (IOException e)
+        {
+
+        }
+        catch (ParseException e)
+        {
+
+        }
+
+        return null;
+    }
+
     /**
      *Elkészít egy szöveges fájlt és lementi a program jelenlegi állapotát.
      * @param mentendok Egy ArrayList ami magába foglalja azokat az ArrayList-eket amik a Játékosokat, az NPC-ket és a Tárgyakat tartalmazzák.
      * @throws IOException
      */
-    public static void mentes(ArrayList<ArrayList> mentendok)
+    public static void mentesLegacy(ArrayList<ArrayList> mentendok)
     {
         byte[] data;
         player=mentendok.get(0);
@@ -87,7 +183,7 @@ public class FileInputOutput
      * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
      * @throws FileNotFoundException Ha a forrásfájl nem található
      */
-    public static ArrayList<ArrayList> betolt() throws FileNotFoundException
+    public static ArrayList<ArrayList> betoltLegacy() throws FileNotFoundException
     {
             player=new ArrayList<>();
             items=new ArrayList<>();
