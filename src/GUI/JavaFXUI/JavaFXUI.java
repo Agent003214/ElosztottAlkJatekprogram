@@ -5,6 +5,7 @@ import Backend.NPC;
 import Backend.Szereplo;
 import Backend.Targy;
 import Exceptions.NevStringException;
+import Exceptions.SulyStringException;
 import Exceptions.TargyNehezException;
 import Main.Main;
 import javafx.application.Application;
@@ -58,7 +59,7 @@ public class JavaFXUI extends Application
         TextField jatekos_nev_tb = new TextField();
         Button jatekos_felvetel_bt = new Button("Felvétel");
         Label jatekos_targy_felvetel_label = new Label("Tárgy felvétele:");
-        ComboBox<String> jatekos_targy_ddl = new ComboBox<String>();
+        ComboBox<Targy> jatekos_targy_ddl = new ComboBox<Targy>();
         Button jatekos_targy_felvetel_bt = new Button("Felvétel");
 
         jatekos_panel.add(jatekos_nev_label,0,0);
@@ -84,7 +85,7 @@ public class JavaFXUI extends Application
         TextField NPC_nev_tb = new TextField();
         Button NPC_felvetel_bt = new Button("Felvétel");
         Label NPC_targy_felvetel_label = new Label("Tárgy felvétele:");
-        ComboBox<String> NPC_targy_ddl = new ComboBox<String>();
+        ComboBox<Targy> NPC_targy_ddl = new ComboBox<Targy>();
         Button NPC_targy_felvetel_bt = new Button("Felvétel");
 
         NPC_panel.add(NPC_nev_label,0,0);
@@ -255,6 +256,41 @@ public class JavaFXUI extends Application
                 alert.setTitle("Hiba");
                 alert.setHeaderText("Először egy NPC felvétele szükséges!");
                 alert.setContentText("A tárgy felvétele előtt egy NPC-re lesz szüksége. Előbb vegye fel az NPC-t és próbálja utána a tárgyat felvenni.");
+                alert.show();
+            }
+        });
+
+        //Tárgy felvétele
+
+        targy_felvetel_bt.setOnAction(event ->
+        {
+            try
+            {
+                targyak.add(m.Targyletrehoz(targy_nev_tb.getText(),targy_suly_tb.getText()));
+                targy_lista.getItems().clear();
+                jatekos_targy_ddl.getItems().removeAll();
+                NPC_targy_ddl.getItems().removeAll();
+                for (Targy targy : targyak)
+                {
+                    targy_lista.setItems(FXCollections.observableArrayList((targy.toString())));
+                    jatekos_targy_ddl.setItems(FXCollections.observableArrayList(targy));
+                    NPC_targy_ddl.setItems(FXCollections.observableArrayList(targy));
+                }
+            }
+            catch (SulyStringException exp)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hiba");
+                alert.setHeaderText("A súly nem megfelelően lett megadva!");
+                alert.setContentText("A tárgy megadásánál a súly nem megfelelően lett megadva. Ellenőrizze hogy a súly ki lett-e töltve és megfelel-e az elvárásoknak.");
+                alert.show();
+            }
+            catch (NevStringException exp)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hiba");
+                alert.setHeaderText("A név nem megfelelően lett megadva!");
+                alert.setContentText("A tárgy megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
                 alert.show();
             }
         });
