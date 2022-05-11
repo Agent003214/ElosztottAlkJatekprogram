@@ -1,5 +1,12 @@
 package GUI.JavaFXUI;
 
+import Backend.Jatekos;
+import Backend.NPC;
+import Backend.Szereplo;
+import Backend.Targy;
+import Exceptions.NevStringException;
+import Exceptions.TargyNehezException;
+import Main.Main;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -14,16 +21,26 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class JavaFXUI extends Application
 {
+
+    private ArrayList<Targy> targyak = new ArrayList<>();
+
+    private ArrayList<Jatekos> jatekosok = new ArrayList<>();
+
+    private ArrayList<NPC> NPC_k = new ArrayList<NPC>();
+
+    private Main m = new Main();
     @Override
-    public void start(Stage primaryStage)
+    public void start(Stage javaFXUIStage)
     {
         Border black = new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(8), new BorderWidths(2)));
-        primaryStage.setTitle("Játékprogram");
-        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("Shield.png")));
+        javaFXUIStage.setTitle("Játékprogram");
+        javaFXUIStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("Shield.png"))));
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(15));
         gridPane.setVgap(15);
@@ -154,8 +171,68 @@ public class JavaFXUI extends Application
         utility_panel.setAlignment(Pos.CENTER);
         gridPane.add(utility_panel,1,4);
 
+        //Játékos felvétele
+
+        jatekos_felvetel_bt.setOnAction(event ->
+        {
+            try
+            {
+                jatekos_lista.getItems().clear();
+                jatekosok.add(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
+                jatekos_lista.setItems(FXCollections.observableArrayList(jatekosok.get(jatekosok.size()-1).toString()));
+                jatekos_felvetel_bt.setDisable(true);
+            }
+            catch (NevStringException exp)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hiba");
+                alert.setHeaderText("A név nem megfelelően lett megadva!");
+                alert.setContentText("A játékos megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
+                alert.show();
+            }
+        });
+
+        //Tárgy felvétele a játékoshoz
+
+        jatekos_targy_felvetel_bt.setOnAction(event ->
+        {
+            try
+            {
+                jatekosok.get(jatekosok.size()-1).addToInventory((Targy) Objects.requireNonNull(jatekos_targy_ddl.getItems()));
+                targyakKiir(jatekos_lista,jatekosok);
+            }
+            catch (TargyNehezException exp)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Nincs elég mozgási sebesség!");
+                alert.setHeaderText("A tárgy túl nehéz, nem tudjuk elvinni!");
+                alert.setContentText("A játékos már nem tudja ezt a tárgyat elvinni mivel a súlya meghaladja a mozgási sebességet!");
+                alert.show();
+            }
+            catch (ArrayIndexOutOfBoundsException exp)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hiba");
+                alert.setHeaderText("Először egy Játékos felvétele szükséges!");
+                alert.setContentText("A tárgy felvétele előtt egy játékosra lesz szüksége. Előbb vegye fel a játékost és próbálja utána a tárgyat felvenni.");
+                alert.show();
+            }
+        });
+
         Scene scene = new Scene(gridPane);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        javaFXUIStage.setScene(scene);
+        javaFXUIStage.show();
+    }
+    private void targyakKiir (ListView<String> lista, ArrayList<? extends Szereplo> list)
+    {
+        lista.getItems().clear();
+        lista.setItems(FXCollections.observableArrayList(jatekosok.get(jatekosok.size()-1).toString()));
+        lista.setItems(FXCollections.observableArrayList("Tárgyak:"));
+
+        for (int i = 0; i < list.get(list.size()-1).getInventory().size(); i++)
+        {
+            lista.setItems(FXCollections.observableArrayList("            "+list.get(list.size()-1).getInventory().get(i).getTargyNev()));
+            lista.setItems(FXCollections.observableArrayList("                        "+list.get(list.size()-1).getInventory().get(i).getTargySuly()));
+        }
     }
 }
