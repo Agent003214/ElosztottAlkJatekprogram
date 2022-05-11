@@ -30,25 +30,44 @@ public class FileInputOutput
         items=mentendok.get(2);
 
         //Items
-        JSONObject itemJson=new JSONObject();
-        for (int i = 0; i < items.size(); i++)
+        if (items.size()>0)
         {
-            itemJson.put("Item"+i, itemJsonAdd(items.get(i).getTargyNev(),items.get(i).getTargySuly()));
+            JSONObject itemJson=new JSONObject();
+            for (int i = 0; i < items.size(); i++)
+            {
+                itemJson.put("Item"+i, itemJsonAdd(items.get(i).getTargyNev(),items.get(i).getTargySuly()));
+            }
+            obj.put("Items",itemJson);
         }
-        obj.put("Items",itemJson);
 
         //Players
-        JSONObject playerJson=new JSONObject();
-        playerJson.put("Name",player.get(0).getSzereploNev());
-        JSONObject playerInventory=new JSONObject();
-
-        for (int i = 0; i < player.get(0).getInventory().size(); i++)
+        if (player.size()>0)
         {
-            playerInventory.put("inventoryItem"+i,itemJsonAdd(player.get(0).getInventory().get(i).getTargyNev(), player.get(0).getInventory().get(i).getTargySuly()));
+            JSONObject playerJson=new JSONObject();
+            playerJson.put("Name",player.get(0).getSzereploNev());
+            JSONObject playerInventory=new JSONObject();
+            for (int i = 0; i < player.get(0).getInventory().size(); i++)
+            {
+                playerInventory.put("inventoryItem"+i,itemJsonAdd(player.get(0).getInventory().get(i).getTargyNev(), player.get(0).getInventory().get(i).getTargySuly()));
+            }
+            playerJson.put("Inventory",playerInventory);
+            obj.put("Player",playerJson);
         }
-        playerJson.put("Inventory",playerInventory);
 
-        obj.put("Player",playerJson);
+        //NPCs
+        if (nonplayer.size()>0)
+        {
+            JSONObject npcJson=new JSONObject();
+            npcJson.put("Name",nonplayer.get(0).getSzereploNev());
+            JSONObject npcInventory=new JSONObject();
+            for (int i = 0; i < nonplayer.get(0).getInventory().size(); i++)
+            {
+                npcInventory.put("inventoryItem"+i,itemJsonAdd(nonplayer.get(0).getInventory().get(i).getTargyNev(), nonplayer.get(0).getInventory().get(i).getTargySuly()));
+            }
+            npcJson.put("Inventory",npcInventory);
+            obj.put("NPC",npcJson);
+        }
+
 
 
 
@@ -84,30 +103,50 @@ public class FileInputOutput
 
             //Item-ek
             JSONObject readItem1= (JSONObject) jsonObject.get("Items");
-            for (int i = 0; i < readItem1.size(); i++)
+            if(readItem1 != null)
             {
-                JSONObject readItem2 = (JSONObject) readItem1.get("Item"+i);
-                String name=(String) readItem2.get("ItemName");
-                Double weight=(Double) readItem2.get("ItemWeight");
-                /*System.out.println(name);
-                System.out.println(weight);*/
-                items.add(new Targy(name,weight));
+                for (int i = 0; i < readItem1.size(); i++)
+                {
+                    JSONObject readItem2 = (JSONObject) readItem1.get("Item"+i);
+                    String name=(String) readItem2.get("ItemName");
+                    Double weight=(Double) readItem2.get("ItemWeight");
+                    items.add(new Targy(name,weight));
+                }
             }
+
 
             //Player-ek
             JSONObject readPlayer1 = (JSONObject) jsonObject.get("Player");
-            System.out.println(readPlayer1.get("Name"));
-            player.add(new Jatekos((String) readPlayer1.get("Name")));
-            JSONObject readPlayer2 = (JSONObject) readPlayer1.get("Inventory");
-            for (int i = 0; i < readPlayer2.size(); i++)
+            if (readPlayer1 != null)
             {
-                JSONObject readPlayer3 = (JSONObject) readPlayer2.get("inventoryItem"+i);
-                String name=(String) readPlayer3.get("ItemName");
-                Double weight=(Double) readPlayer3.get("ItemWeight");
-                System.out.println(name);
-                System.out.println(weight);
-                player.get(0).addToInventory(ItemKeres(name,weight,items));
+                player.add(new Jatekos((String) readPlayer1.get("Name")));
+                JSONObject readPlayer2 = (JSONObject) readPlayer1.get("Inventory");
+                for (int i = 0; i < readPlayer2.size(); i++)
+                {
+                    JSONObject readPlayer3 = (JSONObject) readPlayer2.get("inventoryItem"+i);
+                    String name=(String) readPlayer3.get("ItemName");
+                    Double weight=(Double) readPlayer3.get("ItemWeight");
+                    player.get(0).addToInventory(ItemKeres(name,weight,items));
+                }
             }
+
+
+            //NPC-k
+            JSONObject readNPC1 = (JSONObject) jsonObject.get("NPC");
+            if (readNPC1 != null)
+            {
+                System.out.println(readNPC1.get("Name"));
+                nonplayer.add(new NPC((String) readNPC1.get("Name")));
+                JSONObject readNPC2 = (JSONObject) readNPC1.get("Inventory");
+                for (int i = 0; i < readNPC2.size(); i++)
+                {
+                    JSONObject readNPC3 = (JSONObject) readNPC2.get("inventoryItem"+i);
+                    String name=(String) readNPC3.get("ItemName");
+                    Double weight=(Double) readNPC3.get("ItemWeight");
+                    nonplayer.get(0).addToInventory(ItemKeres(name,weight,items));
+                }
+            }
+
         }
         catch (IOException e)
         {
