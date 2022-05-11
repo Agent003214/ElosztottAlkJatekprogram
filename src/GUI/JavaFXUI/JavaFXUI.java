@@ -219,6 +219,46 @@ public class JavaFXUI extends Application
             }
         });
 
+        //NPC felvétele
+
+        NPC_felvetel_bt.setOnAction(event ->
+        {
+            try
+            {
+                NPC_lista.getItems().clear();
+                NPC_k.add(m.NPCHozzaAd(NPC_nev_tb.getText()));
+                NPC_lista.setItems(FXCollections.observableArrayList(NPC_k.get(NPC_k.size()-1).toString()));
+                NPC_felvetel_bt.setDisable(true);
+            }
+            catch (NevStringException exp)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hiba");
+                alert.setHeaderText("A név nem megfelelően lett megadva!");
+                alert.setContentText("Az NPC megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
+                alert.show();
+            }
+        });
+
+        //Tárgy felvétele az NPC-hez
+
+        NPC_targy_felvetel_bt.setOnAction(event ->
+        {
+            try
+            {
+                NPC_k.get(NPC_k.size()-1).addToInventory((Targy) Objects.requireNonNull(NPC_targy_ddl.getItems()));
+                targyakKiir(NPC_lista,NPC_k);
+            }
+            catch (ArrayIndexOutOfBoundsException exp)
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Hiba");
+                alert.setHeaderText("Először egy NPC felvétele szükséges!");
+                alert.setContentText("A tárgy felvétele előtt egy NPC-re lesz szüksége. Előbb vegye fel az NPC-t és próbálja utána a tárgyat felvenni.");
+                alert.show();
+            }
+        });
+
         Scene scene = new Scene(gridPane);
         javaFXUIStage.setScene(scene);
         javaFXUIStage.show();
