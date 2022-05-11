@@ -29,6 +29,7 @@ public class FileInputOutput
         nonplayer=mentendok.get(1);
         items=mentendok.get(2);
 
+        //Items
         JSONObject itemJson=new JSONObject();
         for (int i = 0; i < items.size(); i++)
         {
@@ -36,6 +37,7 @@ public class FileInputOutput
         }
         obj.put("Items",itemJson);
 
+        //Players
         JSONObject playerJson=new JSONObject();
         playerJson.put("Name",player.get(0).getSzereploNev());
         JSONObject playerInventory=new JSONObject();
@@ -95,6 +97,7 @@ public class FileInputOutput
             //Player-ek
             JSONObject readPlayer1 = (JSONObject) jsonObject.get("Player");
             System.out.println(readPlayer1.get("Name"));
+            player.add(new Jatekos((String) readPlayer1.get("Name")));
             JSONObject readPlayer2 = (JSONObject) readPlayer1.get("Inventory");
             for (int i = 0; i < readPlayer2.size(); i++)
             {
@@ -103,6 +106,7 @@ public class FileInputOutput
                 Double weight=(Double) readPlayer3.get("ItemWeight");
                 System.out.println(name);
                 System.out.println(weight);
+                player.get(0).addToInventory(ItemKeres(name,weight,items));
             }
         }
         catch (IOException e)
@@ -114,7 +118,11 @@ public class FileInputOutput
 
         }
 
-        return null;
+        ArrayList<ArrayList> result=new ArrayList<>();
+        result.add(player);
+        result.add(nonplayer);
+        result.add(items);
+        return result;
     }
 
     /**
@@ -268,4 +276,17 @@ public class FileInputOutput
         }
         throw new RuntimeException();
     }
+
+    private static Targy ItemKeres(String nev,Double suly,ArrayList<Targy> targy)//Megkeresi az összes tárgy között az adott tárgyat
+    {
+        for (int i = 0; i < targy.size(); i++)
+        {
+            if (targy.get(i).getTargyNev().equals(nev) && suly==targy.get(i).getTargySuly())
+            {
+                return targy.get(i);
+            }
+        }
+        throw new RuntimeException();
+    }
+
 }
