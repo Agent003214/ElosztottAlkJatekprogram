@@ -195,16 +195,20 @@ public class JavaFXUI extends Application
         {
             try
             {
-                jatekosok.get(jatekosok.size()-1).addToInventory((Targy) Objects.requireNonNull(jatekos_targy_ddl.getItems()));
+                jatekosok.get(jatekosok.size()-1).addToInventory(jatekos_targy_ddl.getValue());
                 targyakKiir(jatekos_lista,jatekosok);
             }
             catch (TargyNehezException exp)
             {
                 errorAlert("Nincs elég mozgási sebesség!","A tárgy túl nehéz, nem tudjuk elvinni!","A játékos már nem tudja ezt a tárgyat elvinni mivel a súlya meghaladja a mozgási sebességet!");
             }
-            catch (ArrayIndexOutOfBoundsException exp)
+            catch (IndexOutOfBoundsException exp)
             {
-                errorAlert("Hiba","Először egy Játékos felvétele szükséges!","A tárgy felvétele előtt egy játékosra lesz szüksége. Előbb vegye fel a játékost és próbálja utána a tárgyat felvenni.");
+                errorAlert("Hiba","Tárgy vagy Játékos nem lett létrehozva!","Mielőtt felvehetne tárgyat a Játékoshoz, győződjön meg róla hogy Játékos és tárgy is létezik.");
+            }
+            catch (NullPointerException exp)
+            {
+                errorAlert("Hiba","Először egy Tárgy felvétele szükséges!","Mielőtt felvehetne egy tárgyat a játékoshoz, létre kell hoznia egy tárgyat.");
             }
         });
 
@@ -231,12 +235,17 @@ public class JavaFXUI extends Application
         {
             try
             {
-                NPC_k.get(NPC_k.size()-1).addToInventory((Targy) Objects.requireNonNull(NPC_targy_ddl.getItems()));
+                System.out.println(NPC_targy_ddl.getValue());
+                NPC_k.get(NPC_k.size()-1).addToInventory(NPC_targy_ddl.getValue());
                 targyakKiir(NPC_lista,NPC_k);
             }
-            catch (ArrayIndexOutOfBoundsException exp)
+            catch (IndexOutOfBoundsException exp)
             {
-                errorAlert("Hiba","Először egy NPC felvétele szükséges!","A tárgy felvétele előtt egy NPC-re lesz szüksége. Előbb vegye fel az NPC-t és próbálja utána a tárgyat felvenni.");
+                errorAlert("Hiba","Tárgy vagy NPC nem lett létrehozva!","Mielőtt felvehetne tárgyat az NPC-hez, győződjön meg róla hogy NPC és tárgy is létezik.");
+            }
+            catch (NullPointerException exp)
+            {
+                errorAlert("Hiba","Először egy Tárgy felvétele szükséges!","Mielőtt felvehetne egy tárgyat az NPC-hez, létre kell hoznia egy tárgyat.");
             }
         });
 
@@ -254,7 +263,9 @@ public class JavaFXUI extends Application
                 {
                     targy_lista.setItems(FXCollections.observableArrayList((targy.toString())));
                     jatekos_targy_ddl.setItems(FXCollections.observableArrayList(targy));
+                    jatekos_targy_ddl.setValue(targyak.get(0));
                     NPC_targy_ddl.setItems(FXCollections.observableArrayList(targy));
+                    NPC_targy_ddl.setValue(targyak.get(0));
                 }
             }
             catch (SulyStringException exp)

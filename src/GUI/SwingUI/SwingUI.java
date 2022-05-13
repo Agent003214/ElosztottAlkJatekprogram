@@ -254,7 +254,10 @@ public class SwingUI extends JFrame
             catch (ArrayIndexOutOfBoundsException exp)
             {
                 JOptionPane.showMessageDialog(null,"Először egy Játékos felvétele szükséges!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
-
+            }
+            catch (IndexOutOfBoundsException exp)
+            {
+                JOptionPane.showMessageDialog(null,"Először egy tárgy felvétele szükséges!","Hiba",JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -290,15 +293,16 @@ public class SwingUI extends JFrame
             catch (ArrayIndexOutOfBoundsException exp)
             {
                 JOptionPane.showMessageDialog(null,"Először egy NPC felvétele szükséges!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
-
+            }
+            catch (IndexOutOfBoundsException exp)
+            {
+                JOptionPane.showMessageDialog(null,"Először egy tárgy felvétele szükséges!","Hiba",JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         //Tárgy felvétele
         targy_felvetel_button.addActionListener(e ->
         {
-            //Input teszt szükséges
-
             try
             {
                 targyak.add(m.Targyletrehoz(targy_nev_tb.getText(),targy_suly_tb.getText()));
@@ -324,6 +328,8 @@ public class SwingUI extends JFrame
             }
             pack();
         });
+
+        //Rendezés
 
         Jatekos_rendez_ddl.addActionListener(e ->
         {
