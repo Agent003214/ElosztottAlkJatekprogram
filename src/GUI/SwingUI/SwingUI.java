@@ -170,7 +170,7 @@ public class SwingUI extends JFrame
         utility_box.add(mentes_button);
         mentes_button.addActionListener(e ->
         {
-            ArrayList<ArrayList> current = new ArrayList<>();
+            ArrayList<ArrayList<?>> current = new ArrayList<>();
             current.add(jatekosok);
             current.add(NPC_k);
             current.add(targyak);
@@ -182,13 +182,13 @@ public class SwingUI extends JFrame
         utility_box.add(betolt_button);
         betolt_button.addActionListener(e ->
         {
-            ArrayList<ArrayList> result;
+            ArrayList<ArrayList<?>> result;
             try
             {
                 result = FileInputOutput.betolt();
-                jatekosok = result.get(0);
-                NPC_k = result.get(1);
-                targyak = result.get(2);
+                jatekosok = (ArrayList<Jatekos>) result.get(0);
+                NPC_k = (ArrayList<NPC>) result.get(1);
+                targyak = (ArrayList<Targy>) result.get(2);
 
                 if(jatekosok.size() != 0)
                 {
@@ -204,17 +204,18 @@ public class SwingUI extends JFrame
                 NPC_targy_ddl.removeAllItems();
                 for (Targy targy : targyak)
                 {
-                    targy_lista.addElement(targy.toString());   //Az hogy mi lesz kiírva a toString-től függ!
+                    targy_lista.addElement(targy.toString());
 
-                    jatekos_targy_ddl.addItem(targy);           //Dropdow a játékosokhoz
+                    jatekos_targy_ddl.addItem(targy);
 
-                    NPC_targy_ddl.addItem(targy);               //Dropdow az NPC-khez
+                    NPC_targy_ddl.addItem(targy);
                 }
             }
             catch (FileNotFoundException ex)
             {
                 JOptionPane.showMessageDialog(null,"A böltés sikertelen volt, a mentett fájl nem található!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
             }
+            pack();
         });
 
         JButton kilep_button = new JButton("Kilépés");

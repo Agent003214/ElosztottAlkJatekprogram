@@ -7,9 +7,11 @@ import Backend.Targy;
 import Exceptions.NevStringException;
 import Exceptions.SulyStringException;
 import Exceptions.TargyNehezException;
+import FileInputOutput.FileInputOutput;
 import Main.Main;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -23,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -167,6 +170,56 @@ public class JavaFXUI extends Application
         utility_panel.add(betoltes_bt,1,0);
         utility_panel.add(kilepes_bt,2,0);
 
+        mentes_bt.setOnAction(event ->
+        {
+            ArrayList<ArrayList<?>> current = new ArrayList<>();
+            current.add(jatekosok);
+            current.add(NPC_k);
+            current.add(targyak);
+            FileInputOutput.mentes(current);
+        });
+
+        betoltes_bt.setOnAction(event ->
+        {
+            ArrayList<ArrayList<?>> result;
+            try
+            {
+                result = FileInputOutput.betolt();
+                jatekosok = (ArrayList<Jatekos>) result.get(0);
+                NPC_k = (ArrayList<NPC>) result.get(1);
+                targyak = (ArrayList<Targy>) result.get(2);
+
+                if(jatekosok.size() != 0)
+                {
+                    targyakKiir(jatekos_lista,jatekosok);
+                }
+
+                if(NPC_k.size() != 0)
+                {
+                    targyakKiir(NPC_lista,NPC_k);
+                }
+                targy_lista.getItems().clear();
+                jatekos_targy_ddl.getItems().clear();
+                NPC_targy_ddl.getItems().clear();
+
+                for (Targy targy : targyak)
+                {
+                    targy_lista.getItems().add(targy.toString());
+
+                    jatekos_targy_ddl.getItems().add(targy);
+
+                    NPC_targy_ddl.getItems().add(targy);
+
+                }
+                jatekos_targy_ddl.setValue(targyak.get(0));
+                NPC_targy_ddl.setValue(targyak.get(0));
+            }
+            catch (FileNotFoundException ex)
+            {
+                errorAlert("Hiba","Sikertelen betöltés","A betöltés sikertelen volt mivel a mentett fájl nem található!");
+            }
+        });
+
         kilepes_bt.setOnAction(event -> System.exit(0));
 
         utility_panel.setAlignment(Pos.CENTER);
@@ -180,7 +233,7 @@ public class JavaFXUI extends Application
             {
                 jatekos_lista.getItems().clear();
                 jatekosok.add(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
-                jatekos_lista.setItems(FXCollections.observableArrayList(jatekosok.get(jatekosok.size()-1).toString()));
+                jatekos_lista.getItems().add(jatekosok.get(jatekosok.size()-1).toString());
                 jatekos_felvetel_bt.setDisable(true);
             }
             catch (NevStringException exp)
@@ -220,7 +273,7 @@ public class JavaFXUI extends Application
             {
                 NPC_lista.getItems().clear();
                 NPC_k.add(m.NPCHozzaAd(NPC_nev_tb.getText()));
-                NPC_lista.setItems(FXCollections.observableArrayList(NPC_k.get(NPC_k.size()-1).toString()));
+                NPC_lista.getItems().add(NPC_k.get(NPC_k.size()-1).toString());
                 NPC_felvetel_bt.setDisable(true);
             }
             catch (NevStringException exp)
@@ -235,7 +288,6 @@ public class JavaFXUI extends Application
         {
             try
             {
-                System.out.println(NPC_targy_ddl.getValue());
                 NPC_k.get(NPC_k.size()-1).addToInventory(NPC_targy_ddl.getValue());
                 targyakKiir(NPC_lista,NPC_k);
             }
@@ -257,16 +309,16 @@ public class JavaFXUI extends Application
             {
                 targyak.add(m.Targyletrehoz(targy_nev_tb.getText(),targy_suly_tb.getText()));
                 targy_lista.getItems().clear();
-                jatekos_targy_ddl.getItems().removeAll();
-                NPC_targy_ddl.getItems().removeAll();
+                jatekos_targy_ddl.getItems().clear();
+                NPC_targy_ddl.getItems().clear();
                 for (Targy targy : targyak)
                 {
-                    targy_lista.setItems(FXCollections.observableArrayList((targy.toString())));
-                    jatekos_targy_ddl.setItems(FXCollections.observableArrayList(targy));
-                    jatekos_targy_ddl.setValue(targyak.get(0));
-                    NPC_targy_ddl.setItems(FXCollections.observableArrayList(targy));
-                    NPC_targy_ddl.setValue(targyak.get(0));
+                    targy_lista.getItems().add(targy.toString());
+                    jatekos_targy_ddl.getItems().add(targy);
+                    NPC_targy_ddl.getItems().add(targy);
                 }
+                jatekos_targy_ddl.setValue(targyak.get(0));
+                NPC_targy_ddl.setValue(targyak.get(0));
             }
             catch (SulyStringException exp)
             {
@@ -309,13 +361,13 @@ public class JavaFXUI extends Application
     private void targyakKiir (ListView<String> lista, ArrayList<? extends Szereplo> list)
     {
         lista.getItems().clear();
-        lista.setItems(FXCollections.observableArrayList(jatekosok.get(jatekosok.size()-1).toString()));
-        lista.setItems(FXCollections.observableArrayList("Tárgyak:"));
+        lista.getItems().add(jatekosok.get(jatekosok.size()-1).toString());
+        lista.getItems().add("Tárgyak:");
 
         for (int i = 0; i < list.get(list.size()-1).getInventory().size(); i++)
         {
-            lista.setItems(FXCollections.observableArrayList("            "+list.get(list.size()-1).getInventory().get(i).getTargyNev()));
-            lista.setItems(FXCollections.observableArrayList("                        "+list.get(list.size()-1).getInventory().get(i).getTargySuly()));
+            lista.getItems().add("            "+list.get(list.size()-1).getInventory().get(i).getTargyNev());
+            lista.getItems().add("                        "+list.get(list.size()-1).getInventory().get(i).getTargySuly());
         }
     }
     private void errorAlert(String title,String header, String content)
