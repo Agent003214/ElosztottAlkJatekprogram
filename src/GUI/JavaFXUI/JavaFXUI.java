@@ -185,11 +185,7 @@ public class JavaFXUI extends Application
             }
             catch (NevStringException exp)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hiba");
-                alert.setHeaderText("A név nem megfelelően lett megadva!");
-                alert.setContentText("A játékos megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
-                alert.show();
+                errorAlert("Hiba","A név nem megfelelően lett megadva!","A játékos megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
             }
         });
 
@@ -204,19 +200,11 @@ public class JavaFXUI extends Application
             }
             catch (TargyNehezException exp)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Nincs elég mozgási sebesség!");
-                alert.setHeaderText("A tárgy túl nehéz, nem tudjuk elvinni!");
-                alert.setContentText("A játékos már nem tudja ezt a tárgyat elvinni mivel a súlya meghaladja a mozgási sebességet!");
-                alert.show();
+                errorAlert("Nincs elég mozgási sebesség!","A tárgy túl nehéz, nem tudjuk elvinni!","A játékos már nem tudja ezt a tárgyat elvinni mivel a súlya meghaladja a mozgási sebességet!");
             }
             catch (ArrayIndexOutOfBoundsException exp)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hiba");
-                alert.setHeaderText("Először egy Játékos felvétele szükséges!");
-                alert.setContentText("A tárgy felvétele előtt egy játékosra lesz szüksége. Előbb vegye fel a játékost és próbálja utána a tárgyat felvenni.");
-                alert.show();
+                errorAlert("Hiba","Először egy Játékos felvétele szükséges!","A tárgy felvétele előtt egy játékosra lesz szüksége. Előbb vegye fel a játékost és próbálja utána a tárgyat felvenni.");
             }
         });
 
@@ -233,11 +221,7 @@ public class JavaFXUI extends Application
             }
             catch (NevStringException exp)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hiba");
-                alert.setHeaderText("A név nem megfelelően lett megadva!");
-                alert.setContentText("Az NPC megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
-                alert.show();
+                errorAlert("Hiba","A név nem megfelelően lett megadva!","Az NPC megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
             }
         });
 
@@ -252,11 +236,7 @@ public class JavaFXUI extends Application
             }
             catch (ArrayIndexOutOfBoundsException exp)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hiba");
-                alert.setHeaderText("Először egy NPC felvétele szükséges!");
-                alert.setContentText("A tárgy felvétele előtt egy NPC-re lesz szüksége. Előbb vegye fel az NPC-t és próbálja utána a tárgyat felvenni.");
-                alert.show();
+                errorAlert("Hiba","Először egy NPC felvétele szükséges!","A tárgy felvétele előtt egy NPC-re lesz szüksége. Előbb vegye fel az NPC-t és próbálja utána a tárgyat felvenni.");
             }
         });
 
@@ -279,21 +259,14 @@ public class JavaFXUI extends Application
             }
             catch (SulyStringException exp)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hiba");
-                alert.setHeaderText("A súly nem megfelelően lett megadva!");
-                alert.setContentText("A tárgy megadásánál a súly nem megfelelően lett megadva. Ellenőrizze hogy a súly ki lett-e töltve és megfelel-e az elvárásoknak.");
-                alert.show();
+                errorAlert("Hiba","A súly nem megfelelően lett megadva!","A tárgy megadásánál a súly nem megfelelően lett megadva. Ellenőrizze hogy a súly ki lett-e töltve és megfelel-e az elvárásoknak.");
             }
             catch (NevStringException exp)
             {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Hiba");
-                alert.setHeaderText("A név nem megfelelően lett megadva!");
-                alert.setContentText("A tárgy megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
-                alert.show();
+                errorAlert("Hiba","A név nem megfelelően lett megadva!","A tárgy megadásánál a név nem megfelelően lett megadva. Ellenőrizze hogy a név ki lett-e töltve és megfelel-e az elvárásoknak.");
             }
         });
+
 
         Scene scene = new Scene(gridPane);
         javaFXUIStage.setScene(scene);
@@ -310,5 +283,13 @@ public class JavaFXUI extends Application
             lista.setItems(FXCollections.observableArrayList("            "+list.get(list.size()-1).getInventory().get(i).getTargyNev()));
             lista.setItems(FXCollections.observableArrayList("                        "+list.get(list.size()-1).getInventory().get(i).getTargySuly()));
         }
+    }
+    private void errorAlert(String title,String header, String content)
+    {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.show();
     }
 }
