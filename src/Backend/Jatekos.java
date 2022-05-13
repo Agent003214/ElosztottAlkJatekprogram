@@ -2,6 +2,8 @@ package Backend;
 
 import Exceptions.TargyNehezException;
 
+import java.util.Objects;
+
 /**
  * Szereplő osztály gyereke.
  * Ekészít egy Játékost.
@@ -27,7 +29,7 @@ public class Jatekos extends Szereplo
     {
         if (getosszsuly()+item.getTargySuly()<=maxsebesseg)
         {
-            inventory.add(item);
+            inventory.add(Objects.requireNonNull(item));
             sebessegSzamol();
         }
         else

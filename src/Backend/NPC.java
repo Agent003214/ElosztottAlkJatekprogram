@@ -1,4 +1,7 @@
 package Backend;
+
+import java.util.Objects;
+
 /**
  * Szereplő osztály gyereke.
  * Ekészít egy NPC-t.
@@ -13,7 +16,7 @@ public class NPC extends Szereplo
     @Override
     public void addToInventory(Targy item)
     {
-        inventory.add(item);
+        inventory.add(Objects.requireNonNull(item));
     }
 
 }
