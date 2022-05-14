@@ -336,19 +336,29 @@ public class SwingUI extends JFrame
         {
             if(Jatekos_rendez_ddl.getSelectedItem() == "Név szerint")
             {
-                jatekosok.get(jatekosok.size()-1).NevSzerintRendez();
-                targyakKiir(jatekos_lista,jatekosok);
-
-                NPC_k.get(NPC_k.size()-1).NevSzerintRendez();
-                targyakKiir(NPC_lista,NPC_k);
+                if(jatekosok.size() > 0)
+                {
+                    jatekosok.get(jatekosok.size()-1).NevSzerintRendez();
+                    targyakKiir(jatekos_lista,jatekosok);
+                }
+                if(NPC_k.size() > 0)
+                {
+                    NPC_k.get(NPC_k.size()-1).NevSzerintRendez();
+                    targyakKiir(NPC_lista,NPC_k);
+                }
             }
             else
             {
-                jatekosok.get(jatekosok.size()-1).SulySzerintRendez();
-                targyakKiir(jatekos_lista,jatekosok);
-
-                NPC_k.get(NPC_k.size()-1).SulySzerintRendez();
-                targyakKiir(NPC_lista,NPC_k);
+                if(jatekosok.size() > 0)
+                {
+                    jatekosok.get(jatekosok.size()-1).SulySzerintRendez();
+                    targyakKiir(jatekos_lista,jatekosok);
+                }
+                if(NPC_k.size() >0)
+                {
+                    NPC_k.get(NPC_k.size()-1).SulySzerintRendez();
+                    targyakKiir(NPC_lista,NPC_k);
+                }
             }
         });
 
