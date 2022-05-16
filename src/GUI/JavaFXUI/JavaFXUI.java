@@ -11,7 +11,6 @@ import FileInputOutput.FileInputOutput;
 import Main.Main;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -24,10 +23,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import javax.swing.*;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class JavaFXUI extends Application
 {
@@ -44,7 +40,7 @@ public class JavaFXUI extends Application
     {
         Border black = new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID, new CornerRadii(8), new BorderWidths(2)));
         javaFXUIStage.setTitle("Játékprogram");
-        javaFXUIStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("Shield.png"))));
+        javaFXUIStage.getIcons().add(new Image("file:Shield.png"));
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(15));
         gridPane.setVgap(15);
@@ -179,7 +175,7 @@ public class JavaFXUI extends Application
             FileInputOutput.mentes(current);
         });
 
-        betoltes_bt.setOnAction(event ->
+       /* betoltes_bt.setOnAction(event ->
         {
             ArrayList<ArrayList<?>> result;
             try
@@ -218,7 +214,7 @@ public class JavaFXUI extends Application
             {
                 errorAlert("Hiba","Sikertelen betöltés","A betöltés sikertelen volt mivel a mentett fájl nem található!");
             }
-        });
+        }); */
 
         kilepes_bt.setOnAction(event -> System.exit(0));
 

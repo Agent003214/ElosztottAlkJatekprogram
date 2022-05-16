@@ -8,9 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.*;
 
 /**
  * Lekezeli a fájlba mentést és fájlból a betöltést.
@@ -75,7 +73,7 @@ public class FileInputOutput
 
         try(FileWriter file=new FileWriter("mentes.json"))
         {
-            file.write(obj.toJSONString());
+            file.write(obj.toString());
         }
         catch (IOException e)
         {
