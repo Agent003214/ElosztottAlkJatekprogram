@@ -11,6 +11,28 @@ import java.util.Scanner;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.w3c.dom.*;
+import org.xml.sax.SAXException;
+import sun.util.locale.provider.NumberFormatProviderImpl;
 
 /**
  * Lekezeli a fájlba mentést és fájlból a betöltést.
@@ -22,12 +44,113 @@ public class FileInputOutput
     private static ArrayList<Targy> items;
     private static ArrayList<NPC> nonplayer;
 
+    public static void mentes(ArrayList<ArrayList<?>> mentendok)
+    {
+        player= (ArrayList<Jatekos>) mentendok.get(0);
+        nonplayer= (ArrayList<NPC>) mentendok.get(1);
+        items= (ArrayList<Targy>) mentendok.get(2);
+        try
+        {
+            DocumentBuilderFactory documentFactory=DocumentBuilderFactory.newInstance();
+            DocumentBuilder documentBuilder=documentFactory.newDocumentBuilder();
+            Document document=documentBuilder.newDocument();
+
+            Element root=document.createElement("Save");
+            document.appendChild(root);
+            Element itemXML=document.createElement("Items");
+            root.appendChild(itemXML);
+            for (int i = 0; i < items.size(); i++)
+            {
+                Element itemToAdd=document.createElement("ItemList");
+                Attr attr=document.createAttribute("id");
+                attr.setValue(i+"");
+                itemToAdd.setAttributeNode(attr);
+                itemXML.appendChild(itemToAdd);
+                Element itemName=document.createElement("ItemName");
+                itemName.appendChild(document.createTextNode(items.get(i).getTargyNev()));
+                itemToAdd.appendChild(itemName);
+
+                Element itemWeight=document.createElement("ItemWeight");
+                itemWeight.appendChild(document.createTextNode(items.get(i).getTargySuly()+""));
+                itemToAdd.appendChild(itemWeight);
+
+            }
+
+
+            TransformerFactory transformerFactory=TransformerFactory.newInstance();
+            Transformer transformer=transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.INDENT,"yes");
+            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount","4");
+            DOMSource domSource=new DOMSource(document);
+            StreamResult streamResult=new StreamResult(new File("mentes.xml"));
+            transformer.transform(domSource,streamResult);
+        }
+        catch (ParserConfigurationException e)
+        {
+
+        }
+        catch (TransformerConfigurationException e)
+        {
+
+        }
+        catch (TransformerException e)
+        {
+
+        }
+
+
+
+    }
+
+    public static ArrayList<ArrayList<?>> betolt() throws FileNotFoundException
+    {
+        player=new ArrayList<>();
+        items=new ArrayList<>();
+        nonplayer=new ArrayList<>();
+        DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+        try
+        {
+            File inputFile=new File("mentes.xml");
+            DocumentBuilderFactory dbFactory=DocumentBuilderFactory.newInstance();
+            DocumentBuilder dbBuilder=dbFactory.newDocumentBuilder();
+            Document doc= dbBuilder.parse(inputFile);
+            doc.getDocumentElement().normalize();
+            NodeList item=doc.getElementsByTagName("Items");
+            NodeList itemList=doc.getElementsByTagName("ItemList");
+            for (int i = 0; i < itemList.getLength(); i++)
+            {
+                Node nNode=itemList.item(i);
+                if (nNode.getNodeType()==Node.ELEMENT_NODE)
+                {
+                    Element eElement=(Element) nNode;
+                    String itemname=eElement.getElementsByTagName("ItemName").item(0).getTextContent();
+                    double itemweight=Double.parseDouble(eElement.getElementsByTagName("itemWeight").item(0).getTextContent());
+                    items.add(new Targy(itemname, itemweight));
+                    System.out.println(eElement.getElementsByTagName("ItemName").item(0).getTextContent());
+                }
+            }
+        }
+        catch (ParserConfigurationException e)
+        {
+
+        }
+        catch (IOException e)
+        {
+
+        }
+        catch (SAXException e)
+        {
+
+        }
+        return null;
+    }
+
     /**
      * Lementi a program jelenlegi állapotát egy Json fájlba
      * @param mentendok Egy ArrayList ami magába foglalja azokat az ArrayList-eket amik a Játékosokat, az NPC-ket és a Tárgyakat tartalmazzák.
      * @throws IOException
      */
-    public static void mentes(ArrayList<ArrayList<?>> mentendok)
+    public static void mentesJson(ArrayList<ArrayList<?>> mentendok)
     {
         JSONObject obj=new JSONObject();
         player= (ArrayList<Jatekos>) mentendok.get(0);
@@ -103,7 +226,7 @@ public class FileInputOutput
      * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
      * @throws FileNotFoundException Ha nem található a beolvasandó fájl
      */
-    public static ArrayList<ArrayList<?>> betolt() throws FileNotFoundException
+    public static ArrayList<ArrayList<?>> betoltJson() throws FileNotFoundException
     {
         player=new ArrayList<>();
         items=new ArrayList<>();
