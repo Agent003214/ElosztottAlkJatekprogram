@@ -23,6 +23,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class JavaFXUI extends Application
@@ -175,7 +176,7 @@ public class JavaFXUI extends Application
             FileInputOutput.mentes(current);
         });
 
-       /* betoltes_bt.setOnAction(event ->
+        betoltes_bt.setOnAction(event ->
         {
             ArrayList<ArrayList<?>> result;
             try
@@ -214,7 +215,7 @@ public class JavaFXUI extends Application
             {
                 errorAlert("Hiba","Sikertelen betöltés","A betöltés sikertelen volt mivel a mentett fájl nem található!");
             }
-        }); */
+        });
 
         kilepes_bt.setOnAction(event -> System.exit(0));
 

@@ -145,7 +145,6 @@ public class FileInputOutput
             JSONObject readNPC1 = (JSONObject) jsonObject.get("NPC");
             if (readNPC1 != null)
             {
-                System.out.println(readNPC1.get("Name"));
                 nonplayer.add(new NPC((String) readNPC1.get("Name")));
                 JSONObject readNPC2 = (JSONObject) readNPC1.get("Inventory");
                 for (int i = 0; i < readNPC2.size(); i++)
@@ -162,11 +161,7 @@ public class FileInputOutput
         {
             throw new FileNotFoundException();
         }
-        catch (IOException e)
-        {
-
-        }
-        catch (ParseException e)
+        catch (IOException | ParseException ignored)
         {
 
         }
