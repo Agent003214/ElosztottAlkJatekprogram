@@ -164,7 +164,7 @@ public class JavaFXUI extends Application
         mentes_panel.setHgap(15);
         mentes_panel.setBorder(black);
         mentes_panel.setPadding(new Insets(15));
-        mentes_panel.setPrefSize(215,100);
+        mentes_panel.setPrefSize(230,100);
 
         Button mentes_bt = new Button("Mentés");
 
@@ -188,7 +188,7 @@ public class JavaFXUI extends Application
         betoltes_panel.setHgap(15);
         betoltes_panel.setBorder(black);
         betoltes_panel.setPadding(new Insets(15));
-        betoltes_panel.setPrefSize(215,100);
+        betoltes_panel.setPrefSize(230,100);
 
         Button betoltes_bt = new Button("Betöltés");
 
@@ -223,6 +223,8 @@ public class JavaFXUI extends Application
 
         kilepes_bt.setOnAction(event -> System.exit(0));
 
+        //Mentés
+
         mentes_bt.setOnAction(event ->
         {
             ArrayList<ArrayList<?>> current = new ArrayList<>();
@@ -243,6 +245,8 @@ public class JavaFXUI extends Application
                 XML.mentes(current);
             }
         });
+
+        //Betöltés
 
         betoltes_bt.setOnAction(event ->
         {
@@ -444,7 +448,7 @@ public class JavaFXUI extends Application
     private void targyakKiir (ListView<String> lista, ArrayList<? extends Szereplo> list)
     {
         lista.getItems().clear();
-        lista.getItems().add(jatekosok.get(jatekosok.size()-1).toString());
+        lista.getItems().add(list.get(list.size()-1).toString());
         lista.getItems().add("Tárgyak:");
 
         for (int i = 0; i < list.get(list.size()-1).getInventory().size(); i++)
