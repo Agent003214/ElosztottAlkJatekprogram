@@ -16,6 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -57,6 +58,7 @@ public class FileInputOutput
 
             Element root=document.createElement("Save");
             document.appendChild(root);
+            //Items
             Element itemXML=document.createElement("Items");
             root.appendChild(itemXML);
             for (int i = 0; i < items.size(); i++)
@@ -73,9 +75,26 @@ public class FileInputOutput
                 Element itemWeight=document.createElement("ItemWeight");
                 itemWeight.appendChild(document.createTextNode(items.get(i).getTargySuly()+""));
                 itemToAdd.appendChild(itemWeight);
-
             }
 
+            //Player
+            Element playerXML=document.createElement("Player");
+            root.appendChild(playerXML);
+            Element playerName=document.createElement("Name");
+            playerName.appendChild(document.createTextNode(player.get(0).getSzereploNev()));
+            playerXML.appendChild(playerName);
+            for (int i = 0; i < player.get(0).getInventory().size(); i++)
+            {
+                Element playerItems=document.createElement("PlayerItems");
+                playerXML.appendChild(playerItems);
+                Element itemName=document.createElement("ItemName");
+                itemName.appendChild(document.createTextNode(player.get(0).getInventory().get(i).getTargyNev()));
+                playerItems.appendChild(itemName);
+
+                Element itemWeight=document.createElement("ItemWeight");
+                itemWeight.appendChild(document.createTextNode(player.get(0).getInventory().get(i).getTargySuly()+""));
+                playerItems.appendChild(itemWeight);
+            }
 
             TransformerFactory transformerFactory=TransformerFactory.newInstance();
             Transformer transformer=transformerFactory.newTransformer();
@@ -107,11 +126,13 @@ public class FileInputOutput
         player=new ArrayList<>();
         items=new ArrayList<>();
         nonplayer=new ArrayList<>();
-        DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+        //DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
         try
         {
+            //dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING,true);
             File inputFile=new File("mentes.xml");
             DocumentBuilderFactory dbFactory=DocumentBuilderFactory.newInstance();
+            dbFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING,true);
             DocumentBuilder dbBuilder=dbFactory.newDocumentBuilder();
             Document doc= dbBuilder.parse(inputFile);
             doc.getDocumentElement().normalize();
@@ -124,11 +145,41 @@ public class FileInputOutput
                 {
                     Element eElement=(Element) nNode;
                     String itemname=eElement.getElementsByTagName("ItemName").item(0).getTextContent();
-                    double itemweight=Double.parseDouble(eElement.getElementsByTagName("itemWeight").item(0).getTextContent());
+                    double itemweight=Double.parseDouble(eElement.getElementsByTagName("ItemWeight").item(0).getTextContent());
                     items.add(new Targy(itemname, itemweight));
-                    System.out.println(eElement.getElementsByTagName("ItemName").item(0).getTextContent());
                 }
             }
+
+            //Player
+            NodeList playerNode=doc.getElementsByTagName("Player");
+            System.out.println(playerNode.getLength());
+            for (int i = 0; i < playerNode.getLength(); i++)
+            {
+                Node playerInnerNode=playerNode.item(i);
+                if (playerInnerNode.getNodeType()==Node.ELEMENT_NODE)
+                {
+                    Element element=(Element) playerInnerNode;
+                    System.out.println(element.getElementsByTagName("Name").item(0).getTextContent());
+                    player.add(new Jatekos(element.getElementsByTagName("Name").item(0).getTextContent()));
+                    NodeList playerItems=doc.getElementsByTagName("PlayerItems");
+                    for (int j = 0; j < playerItems.getLength(); j++)
+                    {
+                        Node playerItemsNode=playerItems.item(j);
+                        if (playerItemsNode.getNodeType()==Node.ELEMENT_NODE)
+                        {
+                            Element playerItemElement=(Element) playerItemsNode;
+                            System.out.println(playerItemElement.getElementsByTagName("ItemName").item(0).getTextContent());
+                            System.out.println(playerItemElement.getElementsByTagName("ItemWeight").item(0).getTextContent());
+
+                            String itemNev=playerItemElement.getElementsByTagName("ItemName").item(0).getTextContent();
+                            Double itemSuly=Double.parseDouble(playerItemElement.getElementsByTagName("ItemWeight").item(0).getTextContent());
+                            player.get(0).addToInventory(ItemKeres(itemNev,itemSuly,items));
+                        }
+                    }
+                }
+            }
+
+
         }
         catch (ParserConfigurationException e)
         {
@@ -142,7 +193,11 @@ public class FileInputOutput
         {
 
         }
-        return null;
+        ArrayList<ArrayList<?>> result=new ArrayList<>();
+        result.add(player);
+        result.add(nonplayer);
+        result.add(items);
+        return result;
     }
 
     /**
