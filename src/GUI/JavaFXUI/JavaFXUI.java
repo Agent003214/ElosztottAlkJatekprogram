@@ -7,7 +7,7 @@ import Backend.Targy;
 import Exceptions.NevStringException;
 import Exceptions.SulyStringException;
 import Exceptions.TargyNehezException;
-import FileInputOutput.FileInputOutput;
+import FileInputOutput.*;
 import Main.Main;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -21,6 +21,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
@@ -156,16 +158,70 @@ public class JavaFXUI extends Application
         //Utility gombok
 
         GridPane utility_panel = new GridPane();
-        utility_panel.setVgap(15);
-        utility_panel.setHgap(15);
+
+        GridPane mentes_panel = new GridPane();
+        mentes_panel.setVgap(15);
+        mentes_panel.setHgap(15);
+        mentes_panel.setBorder(black);
+        mentes_panel.setPadding(new Insets(15));
+        mentes_panel.setPrefSize(215,100);
 
         Button mentes_bt = new Button("Mentés");
-        Button betoltes_bt = new Button("Betöltés");
-        Button kilepes_bt = new Button("Kilépés");
 
-        utility_panel.add(mentes_bt,0,0);
-        utility_panel.add(betoltes_bt,1,0);
-        utility_panel.add(kilepes_bt,2,0);
+        CheckBox txt_cb = new CheckBox("txt");
+        txt_cb.setSelected(true);
+        CheckBox json_cb = new CheckBox("JSON");
+        json_cb.setSelected(true);
+        CheckBox xml_cb = new CheckBox("XML");
+        xml_cb.setSelected(true);
+
+        mentes_panel.add(mentes_bt,1,0);
+        mentes_panel.add(txt_cb,0,1);
+        mentes_panel.add(json_cb,1,1);
+        mentes_panel.add(xml_cb,2,1);
+
+
+
+
+        GridPane betoltes_panel = new GridPane();
+        betoltes_panel.setVgap(15);
+        betoltes_panel.setHgap(15);
+        betoltes_panel.setBorder(black);
+        betoltes_panel.setPadding(new Insets(15));
+        betoltes_panel.setPrefSize(215,100);
+
+        Button betoltes_bt = new Button("Betöltés");
+
+        ToggleGroup toggleGroup = new ToggleGroup();
+        RadioButton txt_rb = new RadioButton("txt");
+        txt_rb.setToggleGroup(toggleGroup);
+        RadioButton json_rb = new RadioButton("JSON");
+        json_rb.setToggleGroup(toggleGroup);
+        json_rb.setSelected(true);
+        RadioButton xml_rb = new RadioButton("XML");
+        xml_rb.setToggleGroup(toggleGroup);
+
+        betoltes_panel.add(betoltes_bt,1,0);
+        betoltes_panel.add(txt_rb,0,1);
+        betoltes_panel.add(json_rb,1,1);
+        betoltes_panel.add(xml_rb,2,1);
+
+        utility_panel.add(mentes_panel,0,0);
+        utility_panel.add(betoltes_panel,1,0);
+        gridPane.add(utility_panel,1,4);
+
+        //Exit panel
+
+        GridPane kilepes_panel = new GridPane();
+        Button kilepes_bt = new Button("Kilépés");
+        kilepes_bt.setPrefSize(130,35);
+        kilepes_bt.setFont(Font.font(Font.getDefault().toString(),FontWeight.BOLD,12));
+        kilepes_panel.setVgap(15);
+        kilepes_panel.setHgap(15);
+        kilepes_panel.add(kilepes_bt,15,4);
+        gridPane.add(kilepes_panel,2,4);
+
+        kilepes_bt.setOnAction(event -> System.exit(0));
 
         mentes_bt.setOnAction(event ->
         {
@@ -173,15 +229,38 @@ public class JavaFXUI extends Application
             current.add(jatekosok);
             current.add(NPC_k);
             current.add(targyak);
-            FileInputOutput.mentes(current);
+
+            if(txt_cb.isSelected())
+            {
+                TXT.mentes(current);
+            }
+            if(json_cb.isSelected())
+            {
+                JSON.mentes(current);
+            }
+            if (xml_cb.isSelected())
+            {
+                XML.mentes(current);
+            }
         });
 
         betoltes_bt.setOnAction(event ->
         {
-            ArrayList<ArrayList<?>> result;
+            ArrayList<ArrayList<?>> result = null;
             try
             {
-                result = FileInputOutput.betolt();
+                if(txt_rb.isSelected())
+                {
+                    result = TXT.betolt();
+                }
+                if(json_rb.isSelected())
+                {
+                    result = JSON.betolt();
+                }
+                if (xml_rb.isSelected())
+                {
+                    result = XML.betolt();
+                }
                 jatekosok = (ArrayList<Jatekos>) result.get(0);
                 NPC_k = (ArrayList<NPC>) result.get(1);
                 targyak = (ArrayList<Targy>) result.get(2);
@@ -206,21 +285,18 @@ public class JavaFXUI extends Application
                     jatekos_targy_ddl.getItems().add(targy);
 
                     NPC_targy_ddl.getItems().add(targy);
-
                 }
-                jatekos_targy_ddl.setValue(targyak.get(0));
-                NPC_targy_ddl.setValue(targyak.get(0));
+                if(targyak.size() != 0)
+                {
+                    jatekos_targy_ddl.setValue(targyak.get(0));
+                    NPC_targy_ddl.setValue(targyak.get(0));
+                }
             }
             catch (FileNotFoundException ex)
             {
                 errorAlert("Hiba","Sikertelen betöltés","A betöltés sikertelen volt mivel a mentett fájl nem található!");
             }
         });
-
-        kilepes_bt.setOnAction(event -> System.exit(0));
-
-        utility_panel.setAlignment(Pos.CENTER);
-        gridPane.add(utility_panel,1,4);
 
         //Játékos felvétele
 

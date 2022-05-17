@@ -26,12 +26,12 @@ public class TXT
      * @param mentendok Egy ArrayList ami magába foglalja azokat az ArrayList-eket amik a Játékosokat, az NPC-ket és a Tárgyakat tartalmazzák.
      * @throws IOException Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
      */
-    public static void mentes(ArrayList<ArrayList> mentendok)
+    public static void mentes(ArrayList<ArrayList<?>> mentendok)
     {
         byte[] data;
-        player=mentendok.get(0);
-        nonplayer=mentendok.get(1);
-        items=mentendok.get(2);
+        player= (ArrayList<Jatekos>) mentendok.get(0);
+        nonplayer= (ArrayList<NPC>) mentendok.get(1);
+        items= (ArrayList<Targy>) mentendok.get(2);
 
         try (FileOutputStream filebair = new FileOutputStream(file))
         {
@@ -87,7 +87,7 @@ public class TXT
      * @return Arraylist, amiben benne van a játékosok, NPC-k és a tárgyak listája.
      * @throws FileNotFoundException Ha a forrásfájl nem található
      */
-    public static ArrayList<ArrayList> betolt() throws FileNotFoundException
+    public static ArrayList<ArrayList<?>> betolt() throws FileNotFoundException
     {
             player=new ArrayList<>();
             items=new ArrayList<>();
@@ -147,7 +147,7 @@ public class TXT
 
             }
             sc.close();
-            ArrayList<ArrayList> result=new ArrayList<>();
+            ArrayList<ArrayList<?>> result=new ArrayList<>();
             result.add(player);
             result.add(nonplayer);
             result.add(items);
