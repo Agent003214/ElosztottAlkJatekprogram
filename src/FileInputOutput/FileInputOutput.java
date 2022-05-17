@@ -59,42 +59,74 @@ public class FileInputOutput
             Element root=document.createElement("Save");
             document.appendChild(root);
             //Items
-            Element itemXML=document.createElement("Items");
-            root.appendChild(itemXML);
-            for (int i = 0; i < items.size(); i++)
+            if (items.size()>0)
             {
-                Element itemToAdd=document.createElement("ItemList");
-                Attr attr=document.createAttribute("id");
-                attr.setValue(i+"");
-                itemToAdd.setAttributeNode(attr);
-                itemXML.appendChild(itemToAdd);
-                Element itemName=document.createElement("ItemName");
-                itemName.appendChild(document.createTextNode(items.get(i).getTargyNev()));
-                itemToAdd.appendChild(itemName);
+                Element itemXML=document.createElement("Items");
+                root.appendChild(itemXML);
+                for (int i = 0; i < items.size(); i++)
+                {
+                    Element itemToAdd=document.createElement("ItemList");
+                    Attr attr=document.createAttribute("id");
+                    attr.setValue(i+"");
+                    itemToAdd.setAttributeNode(attr);
+                    itemXML.appendChild(itemToAdd);
+                    Element itemName=document.createElement("ItemName");
+                    itemName.appendChild(document.createTextNode(items.get(i).getTargyNev()));
+                    itemToAdd.appendChild(itemName);
 
-                Element itemWeight=document.createElement("ItemWeight");
-                itemWeight.appendChild(document.createTextNode(items.get(i).getTargySuly()+""));
-                itemToAdd.appendChild(itemWeight);
+                    Element itemWeight=document.createElement("ItemWeight");
+                    itemWeight.appendChild(document.createTextNode(items.get(i).getTargySuly()+""));
+                    itemToAdd.appendChild(itemWeight);
+                }
             }
+
 
             //Player
-            Element playerXML=document.createElement("Player");
-            root.appendChild(playerXML);
-            Element playerName=document.createElement("Name");
-            playerName.appendChild(document.createTextNode(player.get(0).getSzereploNev()));
-            playerXML.appendChild(playerName);
-            for (int i = 0; i < player.get(0).getInventory().size(); i++)
+            if (player.size()>0)
             {
-                Element playerItems=document.createElement("PlayerItems");
-                playerXML.appendChild(playerItems);
-                Element itemName=document.createElement("ItemName");
-                itemName.appendChild(document.createTextNode(player.get(0).getInventory().get(i).getTargyNev()));
-                playerItems.appendChild(itemName);
+                Element playerXML=document.createElement("Player");
+                root.appendChild(playerXML);
+                Element playerName=document.createElement("PlayerName");
+                playerName.appendChild(document.createTextNode(player.get(0).getSzereploNev()));
+                playerXML.appendChild(playerName);
+                for (int i = 0; i < player.get(0).getInventory().size(); i++)
+                {
+                    Element playerItems=document.createElement("PlayerItems");
+                    playerXML.appendChild(playerItems);
+                    Element itemName=document.createElement("ItemName");
+                    itemName.appendChild(document.createTextNode(player.get(0).getInventory().get(i).getTargyNev()));
+                    playerItems.appendChild(itemName);
 
-                Element itemWeight=document.createElement("ItemWeight");
-                itemWeight.appendChild(document.createTextNode(player.get(0).getInventory().get(i).getTargySuly()+""));
-                playerItems.appendChild(itemWeight);
+                    Element itemWeight=document.createElement("ItemWeight");
+                    itemWeight.appendChild(document.createTextNode(player.get(0).getInventory().get(i).getTargySuly()+""));
+                    playerItems.appendChild(itemWeight);
+                }
             }
+
+
+            //NPC
+            if (nonplayer.size()>0)
+            {
+                Element NPCXML=document.createElement("NPC");
+                root.appendChild(NPCXML);
+                Element NPCName=document.createElement("NPCName");
+                NPCName.appendChild(document.createTextNode(nonplayer.get(0).getSzereploNev()));
+                NPCXML.appendChild(NPCName);
+                for (int i = 0; i < nonplayer.get(0).getInventory().size(); i++)
+                {
+                    Element NPCItems=document.createElement("NPCItems");
+                    NPCXML.appendChild(NPCItems);
+                    Element itemName=document.createElement("ItemName");
+                    itemName.appendChild(document.createTextNode(nonplayer.get(0).getInventory().get(i).getTargyNev()));
+                    NPCItems.appendChild(itemName);
+
+                    Element itemWeight=document.createElement("ItemWeight");
+                    itemWeight.appendChild(document.createTextNode(nonplayer.get(0).getInventory().get(i).getTargySuly()+""));
+                    NPCItems.appendChild(itemWeight);
+                }
+            }
+
+
 
             TransformerFactory transformerFactory=TransformerFactory.newInstance();
             Transformer transformer=transformerFactory.newTransformer();
@@ -152,15 +184,13 @@ public class FileInputOutput
 
             //Player
             NodeList playerNode=doc.getElementsByTagName("Player");
-            System.out.println(playerNode.getLength());
             for (int i = 0; i < playerNode.getLength(); i++)
             {
                 Node playerInnerNode=playerNode.item(i);
                 if (playerInnerNode.getNodeType()==Node.ELEMENT_NODE)
                 {
                     Element element=(Element) playerInnerNode;
-                    System.out.println(element.getElementsByTagName("Name").item(0).getTextContent());
-                    player.add(new Jatekos(element.getElementsByTagName("Name").item(0).getTextContent()));
+                    player.add(new Jatekos(element.getElementsByTagName("PlayerName").item(0).getTextContent()));
                     NodeList playerItems=doc.getElementsByTagName("PlayerItems");
                     for (int j = 0; j < playerItems.getLength(); j++)
                     {
@@ -168,8 +198,6 @@ public class FileInputOutput
                         if (playerItemsNode.getNodeType()==Node.ELEMENT_NODE)
                         {
                             Element playerItemElement=(Element) playerItemsNode;
-                            System.out.println(playerItemElement.getElementsByTagName("ItemName").item(0).getTextContent());
-                            System.out.println(playerItemElement.getElementsByTagName("ItemWeight").item(0).getTextContent());
 
                             String itemNev=playerItemElement.getElementsByTagName("ItemName").item(0).getTextContent();
                             Double itemSuly=Double.parseDouble(playerItemElement.getElementsByTagName("ItemWeight").item(0).getTextContent());
@@ -179,6 +207,29 @@ public class FileInputOutput
                 }
             }
 
+            //NPC
+            NodeList NPCNode=doc.getElementsByTagName("NPC");
+            for (int i = 0; i < NPCNode.getLength(); i++)
+            {
+                Node NPCInnerNode=NPCNode.item(i);
+                if (NPCInnerNode.getNodeType()==Node.ELEMENT_NODE)
+                {
+                    Element element=(Element) NPCInnerNode;
+                    nonplayer.add(new NPC(element.getElementsByTagName("NPCName").item(0).getTextContent()));
+                    NodeList NPCItems=doc.getElementsByTagName("NPCItems");
+                    for (int j = 0; j < NPCItems.getLength(); j++)
+                    {
+                        Node NPCItemsNode=NPCItems.item(j);
+                        if (NPCItemsNode.getNodeType()==Node.ELEMENT_NODE)
+                        {
+                            Element NPCItemElement=(Element) NPCItemsNode;
+                            String itemNev=NPCItemElement.getElementsByTagName("ItemName").item(0).getTextContent();
+                            Double itemSuly=Double.parseDouble(NPCItemElement.getElementsByTagName("ItemWeight").item(0).getTextContent());
+                            nonplayer.get(0).addToInventory(ItemKeres(itemNev,itemSuly,items));
+                        }
+                    }
+                }
+            }
 
         }
         catch (ParserConfigurationException e)
