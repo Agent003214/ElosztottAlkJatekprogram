@@ -4,7 +4,7 @@ import Backend.*;
 import Exceptions.NevStringException;
 import Exceptions.SulyStringException;
 import Exceptions.TargyNehezException;
-import FileInputOutput.FileInputOutput;
+import FileInputOutput.*;
 import Main.*;
 
 import javax.swing.*;
@@ -168,61 +168,41 @@ public class SwingUI extends JFrame
         JButton mentes_button = new JButton("Mentés");
         mentes_button.setPreferredSize(new Dimension(70,35));
         utility_box.add(mentes_button);
-        mentes_button.addActionListener(e ->
-        {
-            ArrayList<ArrayList<?>> current = new ArrayList<>();
-            current.add(jatekosok);
-            current.add(NPC_k);
-            current.add(targyak);
-            FileInputOutput.mentes(current);
-        });
 
         JButton betolt_button = new JButton("Betöltés");
         betolt_button.setPreferredSize(new Dimension(90,35));
         utility_box.add(betolt_button);
-        betolt_button.addActionListener(e ->
-        {
-            ArrayList<ArrayList<?>> result;
-            try
-            {
-                result = FileInputOutput.betolt();
-                jatekosok = (ArrayList<Jatekos>) result.get(0);
-                NPC_k = (ArrayList<NPC>) result.get(1);
-                targyak = (ArrayList<Targy>) result.get(2);
 
-                if(jatekosok.size() != 0)
-                {
-                    targyakKiir(jatekos_lista,jatekosok);
-                }
-
-                if(NPC_k.size() != 0)
-                {
-                    targyakKiir(NPC_lista,NPC_k);
-                }
-                targy_lista.clear();
-                jatekos_targy_ddl.removeAllItems();
-                NPC_targy_ddl.removeAllItems();
-                for (Targy targy : targyak)
-                {
-                    targy_lista.addElement(targy.toString());
-
-                    jatekos_targy_ddl.addItem(targy);
-
-                    NPC_targy_ddl.addItem(targy);
-                }
-            }
-            catch (FileNotFoundException ex)
-            {
-                JOptionPane.showMessageDialog(null,"A böltés sikertelen volt, a mentett fájl nem található!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
-            }
-            pack();
-        });
 
         JButton kilep_button = new JButton("Kilépés");
         kilep_button.setPreferredSize(new Dimension(70,35));
         utility_box.add(kilep_button);
         kilep_button.addActionListener(event -> System.exit(0));
 
+        //Utility chebox & radio button
+
+        JPanel cb_rb_panel = new JPanel();
+        addobjects(cb_rb_panel,this,layout,constraints,0,4,3,1);
+
+        ButtonGroup bg = new ButtonGroup();
+        JRadioButton rb_txt = new JRadioButton("txt");
+        JRadioButton rb_json = new JRadioButton("JSON",true);
+        JRadioButton rb_xml = new JRadioButton("XML");
+        bg.add(rb_txt);
+        bg.add(rb_json);
+        bg.add(rb_xml);
+
+        cb_rb_panel.add(rb_txt);
+        cb_rb_panel.add(rb_json);
+        cb_rb_panel.add(rb_xml);
+
+        JCheckBox cb_txt = new JCheckBox("txt",true);
+        JCheckBox cb_json = new JCheckBox("JSON",true);
+        JCheckBox cb_xml = new JCheckBox("XML",true);
+
+        cb_rb_panel.add(cb_txt);
+        cb_rb_panel.add(cb_json);
+        cb_rb_panel.add(cb_xml);
 
         //Játékos felvétele
         jatekos_felvesz_button.addActionListener(e ->
@@ -362,6 +342,78 @@ public class SwingUI extends JFrame
             }
         });
 
+        //Mentés
+
+        mentes_button.addActionListener(e ->
+        {
+            ArrayList<ArrayList<?>> current = new ArrayList<>();
+            current.add(jatekosok);
+            current.add(NPC_k);
+            current.add(targyak);
+            if(cb_txt.isSelected())
+            {
+                TXT.mentes(current);
+            }
+            if(cb_json.isSelected())
+            {
+                JSON.mentes(current);
+            }
+            if (cb_xml.isSelected())
+            {
+                XML.mentes(current);
+            }
+        });
+
+        //Betöltés
+
+        betolt_button.addActionListener(e ->
+        {
+            ArrayList<ArrayList<?>> result = null;
+            try
+            {
+                if(rb_txt.isSelected())
+                {
+                    result = TXT.betolt();
+                }
+                if(rb_json.isSelected())
+                {
+                    result = JSON.betolt();
+                }
+                if (rb_xml.isSelected())
+                {
+                    result = XML.betolt();
+                }
+                jatekosok = (ArrayList<Jatekos>) result.get(0);
+                NPC_k = (ArrayList<NPC>) result.get(1);
+                targyak = (ArrayList<Targy>) result.get(2);
+
+                if(jatekosok.size() != 0)
+                {
+                    targyakKiir(jatekos_lista,jatekosok);
+                }
+
+                if(NPC_k.size() != 0)
+                {
+                    targyakKiir(NPC_lista,NPC_k);
+                }
+                targy_lista.clear();
+                jatekos_targy_ddl.removeAllItems();
+                NPC_targy_ddl.removeAllItems();
+                for (Targy targy : targyak)
+                {
+                    targy_lista.addElement(targy.toString());
+
+                    jatekos_targy_ddl.addItem(targy);
+
+                    NPC_targy_ddl.addItem(targy);
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                JOptionPane.showMessageDialog(null,"A betöltés sikertelen volt, a mentett fájl nem található!","Hiba!",JOptionPane.INFORMATION_MESSAGE);
+            }
+            pack();
+        });
 
         pack();
         setLocation(SwingUI.calcualteTheMiddleOfTheScreen(getWidth(),getHeight()));
