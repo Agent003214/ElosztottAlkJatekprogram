@@ -219,6 +219,10 @@ public class XML
             }
 
         }
+        catch (FileNotFoundException e)
+        {
+            throw new FileNotFoundException();
+        }
         catch (ParserConfigurationException e)
         {
 
