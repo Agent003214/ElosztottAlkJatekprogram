@@ -184,6 +184,19 @@ public class SwingUI extends JFrame
         JPanel cb_rb_panel = new JPanel();
         addobjects(cb_rb_panel,this,layout,constraints,0,4,3,1);
 
+        JPanel cb_panel = new JPanel();
+        cb_panel.setBorder(BorderFactory.createTitledBorder("Mentés"));
+        JCheckBox cb_txt = new JCheckBox("txt",true);
+        JCheckBox cb_json = new JCheckBox("JSON",true);
+        JCheckBox cb_xml = new JCheckBox("XML",true);
+
+        cb_panel.add(cb_txt);
+        cb_panel.add(cb_json);
+        cb_panel.add(cb_xml);
+
+        JPanel rb_panel = new JPanel();
+        rb_panel.setBorder(BorderFactory.createTitledBorder("Betöltés"));
+
         ButtonGroup bg = new ButtonGroup();
         JRadioButton rb_txt = new JRadioButton("txt");
         JRadioButton rb_json = new JRadioButton("JSON",true);
@@ -192,17 +205,13 @@ public class SwingUI extends JFrame
         bg.add(rb_json);
         bg.add(rb_xml);
 
-        cb_rb_panel.add(rb_txt);
-        cb_rb_panel.add(rb_json);
-        cb_rb_panel.add(rb_xml);
+        rb_panel.add(rb_txt);
+        rb_panel.add(rb_json);
+        rb_panel.add(rb_xml);
 
-        JCheckBox cb_txt = new JCheckBox("txt",true);
-        JCheckBox cb_json = new JCheckBox("JSON",true);
-        JCheckBox cb_xml = new JCheckBox("XML",true);
+        cb_rb_panel.add(cb_panel);
+        cb_rb_panel.add(rb_panel);
 
-        cb_rb_panel.add(cb_txt);
-        cb_rb_panel.add(cb_json);
-        cb_rb_panel.add(cb_xml);
 
         //Játékos felvétele
         jatekos_felvesz_button.addActionListener(e ->
