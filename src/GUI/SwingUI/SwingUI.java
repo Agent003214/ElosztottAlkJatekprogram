@@ -165,6 +165,28 @@ public class SwingUI extends JFrame
         JPanel utility_box = new JPanel();
         addobjects(utility_box,this,layout,constraints,0,3,3,1);
 
+        JButton clear_button = new JButton("Clear");
+        clear_button.setPreferredSize(new Dimension(70,35));
+        utility_box.add(clear_button);
+        clear_button.addActionListener(e ->
+        {
+            jatekosok.clear();
+            NPC_k.clear();
+            targyak.clear();
+
+            jatekos_targy_ddl.removeAllItems();
+            NPC_targy_ddl.removeAllItems();
+
+            jatekos_lista.clear();
+            NPC_lista.clear();
+            targy_lista.clear();
+
+            jatekos_felvesz_button.setEnabled(true);
+            NPC_felvesz_button.setEnabled(true);
+
+            pack();
+        });
+
         JButton mentes_button = new JButton("Mentés");
         mentes_button.setPreferredSize(new Dimension(70,35));
         utility_box.add(mentes_button);
