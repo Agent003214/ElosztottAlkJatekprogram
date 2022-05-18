@@ -25,6 +25,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -222,6 +223,34 @@ public class JavaFXUI extends Application
         gridPane.add(kilepes_panel,2,4);
 
         kilepes_bt.setOnAction(event -> System.exit(0));
+
+        //Clear panel
+
+        GridPane clear_panel = new GridPane();
+        Button clear_bt = new Button("Clear");
+        clear_bt.setPrefSize(130,35);
+        clear_bt.setFont(Font.font(Font.getDefault().toString(),FontWeight.BOLD,12));
+        clear_panel.setVgap(15);
+        clear_panel.setHgap(15);
+        clear_panel.add(clear_bt,0,4);
+        gridPane.add(clear_panel,0,4);
+
+        clear_bt.setOnAction(event ->
+        {
+            jatekosok.clear();
+            NPC_k.clear();
+            targyak.clear();
+
+            jatekos_targy_ddl.getItems().clear();
+            NPC_targy_ddl.getItems().clear();
+
+            jatekos_lista.getItems().clear();
+            NPC_lista.getItems().clear();
+            targy_lista.getItems().clear();
+
+            jatekos_felvetel_bt.setDisable(false);
+            NPC_felvetel_bt.setDisable(false);
+        });
 
         //Mentés
 
