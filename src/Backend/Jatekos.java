@@ -50,4 +50,10 @@ public class Jatekos extends Szereplo
     {
         return sebesseg;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Név: "+getSzereploNev();
+    }
 }

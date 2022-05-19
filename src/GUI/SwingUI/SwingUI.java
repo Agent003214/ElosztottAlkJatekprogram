@@ -10,6 +10,7 @@ import Main.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -243,6 +244,7 @@ public class SwingUI extends JFrame
                 jatekos_lista.clear();
                 jatekosok.add(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
                 jatekos_lista.addElement(jatekosok.get(jatekosok.size()-1).toString());
+                jatekos_lista.addElement("Sebesség: "+jatekosok.get(jatekosok.size()-1).getSebesseg());
                 jatekos_felvesz_button.setEnabled(false);
             }
             catch (NevStringException exp)
@@ -485,6 +487,12 @@ public class SwingUI extends JFrame
     {
         lista.clear();
         lista.addElement(list.get(list.size()-1).toString());
+        if (list.get(list.size()-1).getClass().equals(jatekosok.get(jatekosok.size()-1).getClass()))
+        {
+            DecimalFormat df=new DecimalFormat("#.##");
+            lista.addElement("Sebesség: "+df.format(jatekosok.get(jatekosok.size()-1).getSebesseg()));
+        }
+
         lista.addElement("Tárgyak:");
 
         for (int i = 0; i < list.get(list.size()-1).getInventory().size(); i++)

@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 
 import javax.swing.*;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class JavaFXUI extends Application
@@ -50,6 +51,7 @@ public class JavaFXUI extends Application
         gridPane.setVgap(15);
         gridPane.setHgap(15);
         gridPane.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+
         // Játékos panel és komponensei
 
         GridPane jatekos_panel = new GridPane();
@@ -340,6 +342,7 @@ public class JavaFXUI extends Application
                 jatekos_lista.getItems().clear();
                 jatekosok.add(m.JatekosHozzaAd(jatekos_nev_tb.getText()));
                 jatekos_lista.getItems().add(jatekosok.get(jatekosok.size()-1).toString());
+                jatekos_lista.getItems().add("Sebesség: "+jatekosok.get(jatekosok.size()-1).getSebesseg());
                 jatekos_felvetel_bt.setDisable(true);
             }
             catch (NevStringException exp)
@@ -478,6 +481,11 @@ public class JavaFXUI extends Application
     {
         lista.getItems().clear();
         lista.getItems().add(list.get(list.size()-1).toString());
+        if (list.get(list.size()-1).getClass().equals(jatekosok.get(jatekosok.size()-1).getClass()))
+        {
+            DecimalFormat df=new DecimalFormat("#.##");
+            lista.getItems().add("Sebesség: "+df.format(jatekosok.get(jatekosok.size()-1).getSebesseg()));
+        }
         lista.getItems().add("Tárgyak:");
 
         for (int i = 0; i < list.get(list.size()-1).getInventory().size(); i++)
