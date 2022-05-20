@@ -30,6 +30,9 @@ import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * JavaFX osztály ami elészíti a JavaFX grafikus felületet. Szükséges Maven függőséget leírja a pom.xml.
+ */
 public class JavaFXUI extends Application
 {
 
@@ -40,6 +43,11 @@ public class JavaFXUI extends Application
     private ArrayList<NPC> NPC_k = new ArrayList<NPC>();
 
     private Main m = new Main();
+
+    /**
+     * A start metódus létrehozza a JavaFX grafikus felületet, felrakja a komponenseket és végrehajta a funkciókat.
+     * @param javaFXUIStage Lényegében maga a form
+     */
     @Override
     public void start(Stage javaFXUIStage)
     {
@@ -477,6 +485,13 @@ public class JavaFXUI extends Application
         javaFXUIStage.setScene(scene);
         javaFXUIStage.show();
     }
+
+    /**
+     * Kiírja a megadott ListView-ba a beadott Szereplo osztályt leszármazó típus tárgyait
+     *
+     * @param lista A ListView amibe írni akarunk
+     * @param list Az ArrayList ami tartalmazza a Szereplő tárgyait
+     */
     private void targyakKiir (ListView<String> lista, ArrayList<? extends Szereplo> list)
     {
         lista.getItems().clear();
@@ -494,6 +509,13 @@ public class JavaFXUI extends Application
             lista.getItems().add("                        "+list.get(list.size()-1).getInventory().get(i).getTargySuly());
         }
     }
+
+    /**
+     * Hibaüzenetet dobó ablak
+     * @param title Az ablak címe
+     * @param header Az ablak fejléce
+     * @param content Az ablak tartalma
+     */
     private void errorAlert(String title,String header, String content)
     {
         Alert alert = new Alert(Alert.AlertType.ERROR);

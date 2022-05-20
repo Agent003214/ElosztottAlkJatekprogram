@@ -10,9 +10,8 @@ import javax.swing.*;
 public class Main
 {
     /**
-     * Elindítja a programot, létrehoz egy UI grafikus felület példányt és lekéri a futtató operációs rendszer által használt grafikus témát
+     * Elindítja a programot, készít egy kis keződ ablakoz ahol a felhasználó választhat hogy milyen grafikus felület akar a program további futása alatt használni
      *
-     * @param args Nem használt
      */
     public static void main(String[] args)
     {
