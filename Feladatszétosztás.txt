@@ -5,6 +5,7 @@ Mentés és Betöltés funkciók elkészítése (txt, JSON és XML)
 Megfelelő Exception-ök elkészítése
 GUI-Funkció kötő metódusok elkészítése
 Felhasználói bevitel ellenőrzése
+Funkció tesztek (TestNG)
 
 Horváth Viktor (RV6JRT)
 
@@ -12,4 +13,4 @@ Swing GUI design, elkészítése és funkciók bekötése
 JavaFX GUI design, elkészítése és funkciók bekötése
 Hibaüzenet dobása rossz bevitel esetén
 Maven framework bevezetése
-
+GUI tesztek (TestNG)
